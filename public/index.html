@@ -84,6 +84,7 @@
           </label>
           <div class="identity-actions">
             <button class="button button-quiet" id="random-button" type="button">Random colours</button>
+            <button class="button button-quiet" id="unglitch-button" type="button" title="Convert glitch values to approximate normal colours, including locked layers. Undo restores the original." disabled>Unglitch colours</button>
             <button class="button button-quiet danger-hover" id="reset-button" type="button">Reset base</button>
           </div>
         </div>
@@ -306,6 +307,7 @@
       </details>
       <details>
         <summary>Colour cards, randomising and locks</summary>
+        <p><strong>Unglitch colours:</strong> converts out-of-range RGB into approximate normal colours. Positive channels keep their ratios; negative channels become zero. If all channels are non-positive, relative intensities recover a colour where possible. Normal colours stay unchanged; out-of-range alpha becomes 1. This also affects locked colours. Exact in-game glitch appearance cannot be preserved. Undo restores the original skin.</p>
         <p>Edit all ten layers: male display, markings, body, flank, underbelly, detail 1, eyes, teeth, mouth and claws. Which regions they affect depends on the species and pattern.</p>
         <ul>
           <li>Click a colour swatch to use the normal colour picker, or enter exact <strong>R, G, B and A</strong> values. Normal values run from 0 to 1. Alpha (<strong>A</strong>) is editable and exported, but its in-game effects are not simulated in the 3D preview. The colour picker changes RGB only.</li>

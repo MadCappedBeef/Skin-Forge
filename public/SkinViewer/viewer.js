@@ -180,15 +180,19 @@ function bodyMaterial(pattern, normal, mask, packed, maskEncoding, colourMapping
   uniforms.tmc = { value: mask || pattern };
   uniforms.hasTmc = { value: Boolean(mask) };
   uniforms.exclusiveTmc = { value: maskEncoding === 'rgb-regions' };
+  uniforms.beipiPatternTwo = { value: false };
   uniforms.stegoPattern = { value: colourMapping === 'stegosaurus' };
   material.onBeforeCompile = shader => {
     Object.assign(shader.uniforms, uniforms);
     shader.fragmentShader = fields.map(f => `uniform vec3 ${f};`).join('\n') +
-      '\nuniform sampler2D tmc;\nuniform bool hasTmc;\nuniform bool exclusiveTmc;\nuniform bool stegoPattern;\n' + shader.fragmentShader;
+      '\nuniform sampler2D tmc;\nuniform bool hasTmc;\nuniform bool exclusiveTmc;\nuniform bool stegoPattern;\nuniform bool beipiPatternTwo;\n' + shader.fragmentShader;
     shader.fragmentShader = shader.fragmentShader.replace('#include <map_fragment>', `
       vec3 p = texture2D(map, vMapUv).rgb;
-      vec3 low = mix(mix(Detail1Color, MaleDisplayColor, p.r), mix(BodyColor, Detail1Color, p.r), p.g);
-      vec3 high = mix(mix(MarkingsColor, FlankColor, p.r), mix(UnderbellyColor, Detail1Color, p.r), p.g);
+      // Beipi adult pattern 2 swaps the body and belly regions in the reference.
+      vec3 bodyRegion = beipiPatternTwo ? UnderbellyColor : BodyColor;
+      vec3 bellyRegion = beipiPatternTwo ? BodyColor : UnderbellyColor;
+      vec3 low = mix(mix(Detail1Color, MaleDisplayColor, p.r), mix(bodyRegion, Detail1Color, p.r), p.g);
+      vec3 high = mix(mix(MarkingsColor, FlankColor, p.r), mix(bellyRegion, Detail1Color, p.r), p.g);
       vec3 skinColour = mix(low, high, p.b);
       if (stegoPattern) {
         // Stego's reference: red display, green belly, blue flank,
@@ -225,6 +229,7 @@ function updateSkin() {
   for (const material of active.materials) {
     const uniforms = material.userData.uniforms;
     if (uniforms) {
+      uniforms.beipiPatternTwo.value = active.entry.id === 'beipi' && age.value === 'adult' && patternIndex(active.entry) === 2;
       for (const field of fields) uniforms[field].value.copy(colour(field));
       uniforms.MaleDisplayColor.value.copy(colour(skin.bIsFemale ? 'BodyColor' : 'MaleDisplayColor'));
     } else material.color.copy(colour(material.userData.legacy ? 'BodyColor' : 'EyesColor'));

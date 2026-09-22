@@ -272,6 +272,7 @@ function renderOutput() {
   elements.viewerGlitchWarning.hidden = !COLOUR_FIELDS.some(({ key }) =>
     CHANNELS.some(channel => skin[key][channel] < 0 || skin[key][channel] > 1)
   );
+  document.querySelector("#unglitch-button").disabled = elements.viewerGlitchWarning.hidden;
   window.skinforgePreviewSkin = snapshot();
   window.dispatchEvent(new CustomEvent("skinforge:skin-change", { detail: window.skinforgePreviewSkin }));
   const value = formatJSON();
@@ -562,6 +563,26 @@ function downloadOutput() {
   toast("JSON file downloaded.");
 }
 
+function unglitchColours() {
+  const next = snapshot();
+  let changed = false;
+  for (const { key } of COLOUR_FIELDS) {
+    const rgb = RGB_CHANNELS.map(channel => next[key][channel]);
+    if (rgb.some(value => value < 0 || value > 1)) {
+      // Positive channels retain their ratios; all-negative colours use relative intensity.
+      const maximum = Math.max(...rgb);
+      const minimum = Math.min(...rgb);
+      const mapped = maximum > 0
+        ? rgb.map(value => Math.max(0, value) / Math.max(1, maximum))
+        : rgb.map(value => maximum > minimum ? (value - minimum) / (maximum - minimum) : 0);
+      RGB_CHANNELS.forEach((channel, i) => { next[key][channel] = mapped[i]; });
+      changed = true;
+    }
+    if (next[key].A < 0 || next[key].A > 1) { next[key].A = 1; changed = true; }
+  }
+  if (changed) commit(next, 'Glitch values converted to approximate normal colours. Undo restores the original.');
+}
+
 function randomiseNormalColours() {
   if (lockedColours.size === COLOUR_FIELDS.length) return;
   const next = snapshot();
@@ -702,6 +723,7 @@ document.querySelector("#download-button").addEventListener("click", downloadOut
 document.querySelector("#save-preset-button").addEventListener("click", saveCurrentPreset);
 document.querySelector("#random-button").addEventListener("click", randomiseNormalColours);
 document.querySelector("#random-output-button").addEventListener("click", randomiseNormalColours);
+document.querySelector("#unglitch-button").addEventListener("click", unglitchColours);
 document.querySelector("#reset-button").addEventListener("click", () => commit(deepClone(DEFAULT_SKIN), "Starter JSON restored."));
 document.querySelector("#lab-apply").addEventListener("click", applyLabGlitch);
 elements.labMode.addEventListener("change", setLabDefaults);
