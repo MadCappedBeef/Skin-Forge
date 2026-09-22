@@ -7,6 +7,7 @@ import { reportRequest } from './report-server.mjs';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.psk': 'application/octet-stream' };
 const server = http.createServer((req, res) => {
+  if (new URL(req.url, 'http://localhost').pathname.startsWith('/api/community/')) { res.writeHead(503, { 'Content-Type': 'application/json' }).end(JSON.stringify({ message: 'Community features require the deployed Cloudflare site or the Cloudflare local development server.' })); return; }
   if (new URL(req.url, 'http://localhost').pathname === '/api/report') { reportRequest(req, res); return; }
   if (!['GET', 'HEAD'].includes(req.method)) { res.writeHead(405, { Allow: 'GET, HEAD' }).end(); return; }
   let pathname;

@@ -1,5 +1,9 @@
 {
   "version": 1,
-  "include": ["/SkinViewer/assets/*", "/api/report"],
+  "include": [
+    "/SkinViewer/assets/*",
+    "/api/report",
+    "/api/community/*"
+  ],
   "exclude": []
 }

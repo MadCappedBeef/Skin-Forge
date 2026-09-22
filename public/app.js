@@ -225,7 +225,7 @@ function canonicalSkin(value) {
 }
 
 function formatJSON(value = skin) {
-  return JSON.stringify(canonicalSkin(value), null, 2);
+  return JSON.stringify(window.SkinForgeFormats.encode(canonicalSkin(value)), null, 2);
 }
 
 function cleanPastedText(text) {
@@ -236,6 +236,22 @@ function cleanPastedText(text) {
     .trim()
     .replace(/^```(?:json)?\s*/i, "")
     .replace(/\s*```$/, "");
+}
+
+function changeSkinServer(id) {
+  const formats = window.SkinForgeFormats;
+  if (id === formats.selected.id) return;
+  const hasDraft = elements.output.value !== formatJSON();
+  const next = hasDraft
+    ? normaliseSkin(formats.decode(JSON.parse(cleanPastedText(elements.output.value))))
+    : snapshot();
+  const output = JSON.stringify(formats.encode(canonicalSkin(next), id), null, 2);
+  if (typeof output !== 'string') throw Error('This server could not export the current skin.');
+  formats.select(id);
+  if (hasDraft) commit(next);
+  elements.output.value = output;
+  renderOutput();
+  toast('Skin output converted for ' + formats.selected.name + '. Saved skins will use this format when loaded.');
 }
 
 function snapshot() {
@@ -305,7 +321,7 @@ function describeJSONError(error, text) {
 function validateOutput() {
   elements.charCount.textContent = `${elements.output.value.length.toLocaleString()} characters`;
   try {
-    normaliseSkin(JSON.parse(cleanPastedText(elements.output.value)));
+    normaliseSkin(window.SkinForgeFormats.decode(JSON.parse(cleanPastedText(elements.output.value))));
     setValidity(true, "Valid");
   } catch (error) {
     setValidity(false, "Invalid", describeJSONError(error, elements.output.value));
@@ -398,11 +414,15 @@ function renderSavedPresets() {
     const row = document.createElement("div");
     row.className = "saved-item";
     row.dataset.saved = item.id;
+    const glitched = COLOUR_FIELDS.some(({ key }) => CHANNELS.some(channel => {
+      const value = item.skin?.[key]?.[channel];
+      return typeof value === "number" && (value < 0 || value > 1);
+    }));
     row.tabIndex = 0;
     row.role = "button";
     row.innerHTML = `
       <span class="saved-glyph">S</span>
-      <span><strong>${escapeHTML(item.name)}</strong><small>${escapeHTML(item.date || "Local preset")}</small></span>
+      <span><strong>${escapeHTML(item.name)}</strong><small>${escapeHTML(item.date || "Local preset")}</small>${glitched ? '<span class="community-glitch-badge saved-glitch-badge" title="Contains colour values outside 0?1. View in-game to see glitch effects.">Glitched</span>' : ""}</span>
       <button class="delete-saved" type="button" data-delete="${escapeHTML(item.id)}" aria-label="Delete ${escapeHTML(item.name)}">×</button>`;
     elements.savedList.append(row);
   }
@@ -470,7 +490,7 @@ function syncAll() {
 function parseAndLoad(text, source = "JSON") {
   try {
     const parsed = JSON.parse(cleanPastedText(text));
-    const next = normaliseSkin(parsed);
+    const next = normaliseSkin(window.SkinForgeFormats.decode(parsed));
     commit(next, `${source} loaded.`);
     return true;
   } catch (error) {
@@ -516,7 +536,7 @@ async function readFiles(fileList) {
         id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
         name: file.name.replace(/\.json$/i, "") || "Imported skin",
         date: new Date().toLocaleDateString(),
-        skin: normaliseSkin(parsed)
+        skin: normaliseSkin(window.SkinForgeFormats.decode(parsed))
       });
     } catch (error) {
       rejected.push(`${file.name}: ${text === undefined ? "The file could not be read." : describeJSONError(error, text)}`);
@@ -704,7 +724,10 @@ elements.savedList.addEventListener("click", event => {
   const row = event.target.closest("[data-saved]");
   if (!row) return;
   const item = savedPresets.find(entry => entry.id === row.dataset.saved);
-  if (item) commit(item.skin, `Loaded “${item.name}”.`);
+  if (item) {
+    elements.skinName.value = item.name;
+    commit(item.skin, `Loaded “${item.name}”.`);
+  }
 });
 
 elements.savedList.addEventListener("keydown", event => {

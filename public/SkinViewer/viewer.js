@@ -10,6 +10,7 @@ const status = document.querySelector('#viewer-status');
 const note = document.querySelector('#viewer-note');
 const releaseNotice = document.querySelector('#viewer-release-notice');
 const select = document.querySelector('#viewer-species');
+const mini = document.documentElement.dataset.mini === 'true';
 const reset = document.querySelector('#viewer-reset');
 const rotate = document.querySelector('#viewer-rotate');
 const age = document.querySelector('#viewer-age');
@@ -23,6 +24,7 @@ for (const { id, name, model, releaseStatus } of species) {
   select.add(option);
 }
 try { select.value = localStorage.getItem('skinforge.viewer.species') || 'carno'; } catch { select.value = 'carno'; }
+if (mini) select.value = window.skinforgePreviewSpecies;
 if (!select.value || select.selectedOptions[0].disabled) select.value = 'carno';
 function updateReleaseNotice() {
   const entry = species.find(entry => entry.id === select.value);
@@ -57,7 +59,7 @@ try {
   const saved = localStorage.getItem(BRIGHTNESS_STORAGE_KEY);
   const value = Number(saved);
   if (saved !== null && Number.isFinite(value) && value >= 0 && value <= 120) brightness.value = String(value);
-  localStorage.setItem(BRIGHTNESS_STORAGE_KEY, brightness.value);
+  if (!mini) localStorage.setItem(BRIGHTNESS_STORAGE_KEY, brightness.value);
 } catch {  }
 function updateBrightness() {
   const percent = Number(brightness.value);
@@ -352,7 +354,7 @@ async function loadSpecies() {
   stage.setAttribute('aria-busy', String(active.pendingPattern !== undefined));
   reset.disabled = rotate.disabled = false;
   age.disabled = false;
-  try { localStorage.setItem('skinforge.viewer.species', id); } catch {  }
+  try { if (!mini) localStorage.setItem('skinforge.viewer.species', id); } catch {  }
 }
 window.addEventListener('skinforge:skin-change', event => { skin = event.detail; updateSkin(); });
 select.disabled = false;
@@ -390,3 +392,12 @@ renderer.domElement.addEventListener('keydown', event => {
   controls.update();
 });
 await loadSpecies();
+
+window.addEventListener('pagehide', () => {
+  generation++;
+  renderer.setAnimationLoop(null);
+  controls.dispose();
+  if (active) { dispose(active); active = null; }
+  renderer.dispose();
+  renderer.forceContextLoss();
+});

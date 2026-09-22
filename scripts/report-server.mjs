@@ -9,7 +9,7 @@ export async function reportRequest(req, res) {
       method: req.method, headers,
       ...(!['GET', 'HEAD'].includes(req.method) ? { body: req, duplex: 'half' } : {})
     });
-    const response = await handleReport(request, { DISCORD_REPORT_WEBHOOK: process.env.DISCORD_REPORT_WEBHOOK });
+    const response = await handleReport(request, { DISCORD_REPORT_WEBHOOK: process.env.DISCORD_REPORT_WEBHOOK, DISCORD_SERVER_REQUEST_WEBHOOK: process.env.DISCORD_SERVER_REQUEST_WEBHOOK });
     res.writeHead(response.status, Object.fromEntries(response.headers));
     res.end(await response.text());
   } catch { res.writeHead(500, { 'Content-Type': 'application/json' }).end(JSON.stringify({ message: 'Reports are temporarily unavailable.' })); }

@@ -27,6 +27,7 @@ function parseEggParent(text, label) {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     throw new Error(`${label}: the skin JSON must be an object.`);
   }
+  value = window.SkinForgeFormats.decode(value);
   for (const key of ["SkinVariation", "PatternIndex"]) {
     if (!Number.isInteger(value[key]) || value[key] < 0) {
       throw new Error(`${label}: ${key} must be a non-negative whole number.`);

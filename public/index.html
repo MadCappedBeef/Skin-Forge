@@ -21,6 +21,8 @@
       </span>
     </a>
     <div class="header-status">
+      <button class="button button-quiet" id="editor-tab" type="button" aria-pressed="true">Editor</button>
+      <button class="button button-quiet" id="community-tab" type="button" aria-pressed="false">Community skins</button>
       <a class="button button-quiet source-link" href="https://github.com/MadCappedBeef/Skin-Forge" target="_blank" rel="noopener noreferrer" aria-label="Source code on GitHub (opens in a new tab)">GitHub source ?</a>
       <button class="button button-quiet" id="report-button" type="button" aria-haspopup="dialog" aria-controls="report-dialog">Report an issue</button>
       <button class="button button-quiet" id="guide-button" type="button" aria-haspopup="dialog" aria-controls="guide-dialog">Guide</button>
@@ -43,6 +45,13 @@
         <input id="file-input" type="file" accept="application/json,.json" multiple hidden>
       </section>
 
+      <section class="panel server-panel" aria-labelledby="server-title">
+        <div class="panel-heading"><div><div class="eyebrow">SKIN FORMAT</div><h2 id="server-title">Choose your server</h2></div></div>
+        <label for="skin-server">Making a skin for</label>
+        <select id="skin-server"></select>
+        <button id="server-request-button" class="button button-quiet" type="button" aria-haspopup="dialog" aria-controls="server-request-dialog">Request server support</button>
+      </section>
+
       <section class="panel saved-panel">
         <div class="panel-heading">
           <div>
@@ -57,6 +66,7 @@
     </aside>
 
     <section class="editor-column">
+
       <section class="panel identity-panel">
         <div class="identity-title">
           <div>
@@ -90,14 +100,7 @@
         </div>
       </section>
 
-      <section class="panel random-theme-panel" aria-labelledby="random-theme-title">
-        <label id="random-theme-title" for="random-theme">Random colour theme</label>
-        <div class="random-theme-controls">
-          <select id="random-theme" data-random-theme aria-describedby="random-theme-description"></select>
-          <div id="random-theme-swatches" class="random-theme-swatches" aria-hidden="true"></div>
-        </div>
-        <p id="random-theme-description"></p>
-      </section>
+
 
       <section class="panel viewer-panel" aria-labelledby="viewer-title">
         <div class="panel-heading">
@@ -111,8 +114,11 @@
             <option value="juvenile">Juvenile skin</option>
             <option value="hatchling">Hatchling skin</option>
           </select></label>
-          <button class="button button-quiet" id="viewer-reset" type="button" disabled>Reset view</button>
-          <button class="button button-quiet" id="viewer-rotate" type="button" aria-pressed="false" disabled>Auto rotate</button>
+          <div class="viewer-actions" role="group" aria-label="Preview actions">
+            <button class="button button-quiet" id="viewer-reset" type="button" disabled>Reset view</button>
+            <button class="button button-quiet" id="viewer-rotate" type="button" aria-pressed="false" disabled>Auto rotate</button>
+            <button class="button button-primary" id="viewer-share" type="button">Share skin</button>
+          </div>
         </div>
         <div class="viewer-lighting">
           <label for="viewer-brightness">Light intensity</label>
@@ -164,6 +170,15 @@
           <p id="egg-status" role="status" aria-live="polite">Parents and eggs stay in this tab until you reload. Download any results you want to keep.</p>
           <div id="egg-results" class="egg-results"></div>
         </details>
+      </section>
+
+      <section class="panel random-theme-panel" aria-labelledby="random-theme-title">
+        <label id="random-theme-title" for="random-theme">Random colour theme</label>
+        <div class="random-theme-controls">
+          <select id="random-theme" data-random-theme aria-describedby="random-theme-description"></select>
+          <div id="random-theme-swatches" class="random-theme-swatches" aria-hidden="true"></div>
+        </div>
+        <p id="random-theme-description"></p>
       </section>
 
       <section class="panel glitch-lab">
@@ -238,7 +253,7 @@
           </div>
           <span class="validity valid" id="json-validity"><i></i> Valid</span>
         </div>
-        <p class="output-note">Live output. You can also paste one of your existing codes here, then load it into the editor.</p>
+        <p class="output-note">Output for <strong id="output-server-name">Dino Den</strong>. Paste a supported skin code here to load or convert it.</p>
         <textarea id="json-output" spellcheck="false" aria-label="Skin JSON output" aria-describedby="json-error" aria-invalid="false"></textarea>
         <p class="json-error" id="json-error" role="status" aria-live="polite" hidden></p>
         <div class="drop-hint" id="drop-hint">Drop a .json file here</div>
@@ -266,6 +281,46 @@
       </section>
     </aside>
   </main>
+
+  <section id="community" class="community-page" aria-labelledby="community-title" hidden>
+    <div class="panel community-heading"><div><div class="eyebrow">SHARE YOUR COLOURS</div><h1 id="community-title">Community skins</h1><p>Browse skins and open them in the 3D viewer. Sign in through Steam to publish or report a skin.</p></div>
+      <div class="community-account"><a id="community-login" href="/api/community/auth/login"><img src="https://community.cloudflare.steamstatic.com/public/images/signinthroughsteam/sits_01.png" alt="Sign in through Steam" width="180" height="35"></a><span id="community-user"></span><button id="community-logout" class="button button-quiet" type="button" hidden>Sign out</button></div>
+    </div>
+    <div class="panel community-publish" id="community-database-control" hidden>
+      <h2>Community database</h2>
+      <p id="community-database-note">Pause community browsing, sign-ins and submissions to stop new database queries. Saved skins remain intact. The editor and viewer stay available.</p>
+      <button class="button button-quiet" id="community-database-toggle" type="button">Pause community</button>
+    </div>
+    <p id="community-status" role="status" aria-live="polite"></p>
+    <details id="community-publish" class="panel community-publish" hidden><summary>Publish your current skin</summary>
+      <p>Your current editor skin is published immediately under your SteamID. Use a suitable name; administrators can remove skins or ban accounts. Your skin JSON and Steam profile link will be public.</p>
+      <form id="community-publish-form"><label for="community-title-input">Skin name</label><input id="community-title-input" type="text" minlength="2" maxlength="80" required>
+        <p id="community-current-species"></p><button class="button button-primary" type="submit">Publish current skin</button></form>
+    </details>
+    <form id="community-search" class="panel community-search"><label for="community-query">Search skins<input id="community-query" type="search" maxlength="80" placeholder="Skin name"></label><label for="community-species">Species<select id="community-species"><option value="">All species</option></select></label><label for="community-glitch">Skin type<select id="community-glitch"><option value="">All skins</option><option value="yes">Glitched only</option><option value="no">Non-glitched only</option></select></label><button class="button button-quiet" type="submit">Search</button><label id="community-admin-filter" hidden><input type="checkbox" id="community-show-hidden"> Include hidden skins</label></form>
+    <div id="community-list" class="community-grid"></div><button id="community-more" class="button button-quiet" type="button" hidden>Load more</button>
+    <section id="community-admin" class="panel community-admin" hidden><h2>Moderation</h2><p>Removing a skin hides it from the gallery. Ban blocks submissions; Ban and hide all also hides the user's skins. Unban does not automatically restore hidden skins.</p>
+      <form id="community-admin-user"><label for="community-steamid">User SteamID64</label><input id="community-steamid" inputmode="numeric" pattern="[0-9]{17}" maxlength="17" required placeholder="17-digit SteamID64"><label for="community-user-action">Action</label><select id="community-user-action"><option value="ban">Ban user</option><option value="ban-all">Ban and hide all skins</option><option value="unban">Unban user</option><option value="restore-user">Restore account's skins</option></select><label for="community-admin-reason">Reason</label><input id="community-admin-reason" maxlength="500" required><button class="button button-quiet" type="submit">Apply action</button></form>
+      <h3>Reported skins</h3><div id="community-reports"></div><h3>Banned users and admins</h3><div id="community-users"></div><h3>Recent moderation history</h3><div id="community-audit"></div>
+    </section>
+  </section>
+
+  <dialog class="site-guide quick-share-dialog" id="quick-share-dialog" aria-labelledby="quick-share-title">
+    <div class="site-guide-heading"><div><div class="eyebrow">COMMUNITY SKINS</div><h2 id="quick-share-title">Share your skin</h2></div><form method="dialog"><button class="button button-quiet">Close</button></form></div>
+    <div class="quick-share-content">
+      <p class="quick-share-intro">Share your creation for others to discover and use. Your Steam profile will appear beside it.</p>
+      <div class="quick-share-species"><span>SPECIES</span><strong id="quick-share-species"></strong></div>
+      <p id="quick-share-status" role="status" aria-live="polite"></p>
+      <a class="button button-primary" id="quick-share-login" href="/api/community/auth/login" hidden>Sign in through Steam</a>
+      <form id="quick-share-form" hidden>
+        <label for="quick-share-name">Skin name</label>
+        <input id="quick-share-name" type="text" minlength="2" maxlength="80" required placeholder="Give your skin a name" aria-describedby="quick-share-note">
+        <p id="quick-share-note">Your skin will be public immediately. You can remove it from the gallery later.</p>
+        <div class="quick-share-footer"><button class="button button-primary" type="submit">Publish skin</button></div>
+      </form>
+      <button class="button button-primary" id="quick-share-gallery" type="button" hidden>View community skins</button>
+    </div>
+  </dialog>
 
   <dialog class="site-guide" id="guide-dialog" aria-labelledby="guide-title">
     <div class="site-guide-heading">
@@ -368,6 +423,15 @@
         <p>Each egg shows which parent supplied each colour. Preview in editor loads that egg into the main 3D viewer and JSON editor; Undo restores the previous skin. This replaces the whole skin, including locked colours. Download JSON saves an individual egg, or save a previewed egg to your library. Parents and results are temporary and disappear on reload. Growth stages still use the adult mesh.</p>
       </details>
       <details>
+        <summary>Server selection and support requests</summary>
+        <p>Choose your server above the editor. Changing servers converts the current output, including valid pasted edits. Invalid pasted edits block switching so they are not lost. Saved skins keep their original editor values and use the selected format when loaded, copied or downloaded. Only reviewed formats are listed, and your choice is remembered in this browser. Dino Den is the current supported server. To request another server, provide its name and paste or open an example skin JSON. Your example goes to the Discord review channel without changing the editor skin. Submitting a request does not automatically add support.</p>
+      </details>
+      <details>
+        <summary>Community skins and Steam sign-in</summary>
+        <p>Open Community skins to browse or search by species. View / use skin loads it into the existing editor and 3D viewer, using your selected server format. Undo restores your previous skin. Sign in on Steam to publish your current editor skin or report an inappropriate entry. Skin names, JSON and Steam profile links are public. Only post skins you want to share.</p>
+        <p>Skins publish immediately. Administrators can rename, hide or restore skins and ban accounts. The owner can grant and remove admin access using SteamID64. Moderation actions are recorded privately. Bans apply to that Steam account.</p>
+      </details>
+      <details>
         <summary>Reporting an issue</summary>
         <p>Choose Report an issue in the header, describe the problem, and optionally attach up to three images (PNG, JPEG, GIF or WebP, up to 2 MB each). You can also include the active skin JSON; the toggle is off by default. Review the skin code before sending. Pasted edits must be loaded into the editor first.</p>
         <p>The message, viewer species, selected images and optional skin code go to the site's Discord review channel. A confirmation appears after delivery. If sending fails, your report stays in the form so you can retry. Closing the form keeps your draft until the page reloads.</p>
@@ -417,6 +481,22 @@
     </form>
   </dialog>
 
+  <dialog class="site-guide" id="server-request-dialog" aria-labelledby="server-request-title">
+    <div class="site-guide-heading"><h2 id="server-request-title">Request server support</h2><form method="dialog"><button class="button button-quiet">Close</button></form></div>
+    <form id="server-request-form" class="site-guide-content report-form">
+      <p>Send the server name and an example of its skin JSON to the site's Discord review channel. Requests are reviewed before support is added. Remove account details, tokens and other private information from your example.</p>
+      <fieldset id="server-request-fields">
+        <label for="server-request-name">Server name</label><input id="server-request-name" type="text" maxlength="100" required>
+        <label for="server-request-notes">Notes (optional)</label><textarea id="server-request-notes" rows="3" maxlength="2000" placeholder="Where is this JSON used? Include any format requirements."></textarea>
+        <label for="server-request-json">Example skin JSON</label><textarea id="server-request-json" rows="8" maxlength="20000" spellcheck="false" required placeholder="Paste the server's example JSON here"></textarea>
+        <button id="server-request-open" class="button button-quiet" type="button">Open JSON file</button><input id="server-request-file" type="file" accept=".json,application/json" hidden>
+        <p>Up to 20,000 characters. This example is sent for review and does not replace your current skin.</p>
+        <button id="server-request-submit" class="button button-primary" type="submit">Send request</button>
+      </fieldset>
+      <p id="server-request-status" role="status" aria-live="polite"></p>
+    </form>
+  </dialog>
+
   <div class="toast-region" id="toast-region" aria-live="polite"></div>
 
   <template id="colour-card-template">
@@ -443,9 +523,12 @@
     </article>
   </template>
 
+  <script src="server-formats.js"></script>
   <script src="app.js"></script>
   <script src="eggs.js"></script>
   <script src="reports.js"></script>
+  <script src="servers.js"></script>
+  <script src="community.js"></script>
   <script type="importmap">
     { "imports": { "three": "./vendor/three/three.module.js", "three/addons/": "./vendor/three/" } }
   </script>

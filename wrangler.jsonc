@@ -3,5 +3,22 @@
   "name": "skinforge",
   "pages_build_output_dir": "./public",
   "compatibility_date": "2026-09-19",
-  "r2_buckets": [{ "binding": "SKIN_ASSETS", "bucket_name": "skinforge-assets" }]
+  "r2_buckets": [
+    {
+      "binding": "SKIN_ASSETS",
+      "bucket_name": "skinforge-assets"
+    }
+  ],
+  "vars": {
+    "COMMUNITY_ORIGIN": "https://skinforge-b4f.pages.dev",
+    "ADMIN_STEAM_IDS": "76561198118215322"
+  },
+  "d1_databases": [
+    {
+      "binding": "COMMUNITY_DB",
+      "database_name": "skinforge-community",
+      "database_id": "493a0ec1-3a79-488f-ad31-c5abf395a30d",
+      "migrations_dir": "migrations"
+    }
+  ]
 }

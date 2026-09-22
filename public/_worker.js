@@ -1,3 +1,4 @@
+import { handleCommunity } from './community-handler.mjs';
 import { handleReport } from './report-handler.mjs';
 const PREFIX = '/SkinViewer/assets/';
 
@@ -21,6 +22,7 @@ function respond(request, response) {
 export default {
   async fetch(request, env, context) {
     const url = new URL(request.url);
+    if (url.pathname.startsWith('/api/community/')) return handleCommunity(request, env);
     if (url.pathname === '/api/report') return handleReport(request, env);
     if (!url.pathname.startsWith(PREFIX)) return env.ASSETS.fetch(request);
     if (!['GET', 'HEAD'].includes(request.method)) {

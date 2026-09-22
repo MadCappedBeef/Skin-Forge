@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" data-mini="true">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skin preview</title>
+  <link rel="stylesheet" href="mini.css">
+  <script type="importmap">{"imports":{"three":"../vendor/three/three.module.js","three/addons/":"../vendor/three/"}}</script>
+</head>
+<body>
+  <div id="viewer-stage"><p id="viewer-status" role="status">Loading preview…</p></div>
+  <p class="hint">Drag to rotate · Scroll to zoom</p>
+  <div hidden>
+    <p id="viewer-note"></p><p id="viewer-release-notice"></p><span id="viewer-count"></span>
+    <select id="viewer-species"></select>
+    <select id="viewer-age"><option value="adult">Adult skin</option></select>
+    <button id="viewer-reset">Reset</button><button id="viewer-rotate">Rotate</button>
+    <input id="viewer-brightness" type="range" min="0" max="120"><output id="viewer-brightness-value"></output>
+  </div>
+  <script src="mini.js"></script>
+</body>
+</html>
