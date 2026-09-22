@@ -393,3 +393,10 @@ input[type="number"], select, .skin-name-input, textarea { outline: none; }
   .output-actions { grid-template-columns: 1fr 1fr; }
   #load-code-button { grid-column: 1 / -1; }
 }
+
+.source-link { color: var(--text); text-decoration: none; white-space: nowrap; }
+.source-link:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+@media (max-width: 780px) {
+  .app-header { height: auto; min-height: 66px; flex-wrap: wrap; gap: 12px; padding: 12px 16px; }
+  .header-status { flex-wrap: wrap; }
+}
