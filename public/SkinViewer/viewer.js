@@ -1,3 +1,4 @@
+import { previewChannel } from './glitch-colour.mjs';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { PSKLoader } from './PSKLoader.mjs';
@@ -11,6 +12,14 @@ const note = document.querySelector('#viewer-note');
 const releaseNotice = document.querySelector('#viewer-release-notice');
 const select = document.querySelector('#viewer-species');
 const mini = document.documentElement.dataset.mini === 'true';
+const glitchPreview = document.querySelector('#viewer-glitch-mode');
+let experimentalGlitches = false;
+const negativeControl = document.querySelector('#viewer-negative-strength');
+const negativeOutput = document.querySelector('#viewer-negative-value');
+const negativePanel = document.querySelector('#viewer-negative-controls');
+let negativeStrength = 1;
+if (negativeControl) negativeControl.value = '100';
+if (glitchPreview) glitchPreview.checked = false;
 const reset = document.querySelector('#viewer-reset');
 const rotate = document.querySelector('#viewer-rotate');
 const age = document.querySelector('#viewer-age');
@@ -157,9 +166,9 @@ renderer.domElement.addEventListener('webglcontextlost', event => {
 
 const fields = ['BodyColor', 'FlankColor', 'MarkingsColor', 'UnderbellyColor', 'Detail1Color',
   'MaleDisplayColor', 'TeethColor', 'MouthColor', 'ClawsColor'];
-function colour(field) {
+function colour(field, signed = false) {
   const value = skin[field];
-  return new THREE.Color().setRGB(...['R', 'G', 'B'].map(c => THREE.MathUtils.clamp(value[c], 0, 1)));
+  return new THREE.Color().setRGB(...['R', 'G', 'B'].map(c => previewChannel(value[c], signed && experimentalGlitches, negativeStrength)));
 }
 
 function bodyMaterial(pattern, normal, mask, packed, maskEncoding, colourMapping) {
@@ -171,21 +180,22 @@ function bodyMaterial(pattern, normal, mask, packed, maskEncoding, colourMapping
     return material;
   }
   material.normalScale.set(1, -1);
-  const uniforms = Object.fromEntries(fields.map(field => [field, { value: colour(field) }]));
-  uniforms.MaleDisplayColor.value.copy(colour(skin.bIsFemale ? 'BodyColor' : 'MaleDisplayColor'));
+  const uniforms = Object.fromEntries(fields.map(field => [field, { value: colour(field, true) }]));
+  uniforms.MaleDisplayColor.value.copy(colour(skin.bIsFemale ? 'BodyColor' : 'MaleDisplayColor', true));
   uniforms.tmc = { value: mask || pattern };
   uniforms.hasTmc = { value: Boolean(mask) };
   uniforms.exclusiveTmc = { value: maskEncoding === 'rgb-regions' };
   uniforms.beipiPattern = { value: false };
+  uniforms.rexPattern = { value: false };
   uniforms.stegoPattern = { value: colourMapping === 'stegosaurus' };
   material.onBeforeCompile = shader => {
     Object.assign(shader.uniforms, uniforms);
     shader.fragmentShader = fields.map(f => `uniform vec3 ${f};`).join('\n') +
-      '\nuniform sampler2D tmc;\nuniform bool hasTmc;\nuniform bool exclusiveTmc;\nuniform bool stegoPattern;\nuniform bool beipiPattern;\n' + shader.fragmentShader;
+      '\nuniform sampler2D tmc;\nuniform bool hasTmc;\nuniform bool exclusiveTmc;\nuniform bool stegoPattern;\nuniform bool beipiPattern;\nuniform bool rexPattern;\n' + shader.fragmentShader;
     shader.fragmentShader = shader.fragmentShader.replace('#include <map_fragment>', `
       vec3 p = texture2D(map, vMapUv).rgb;
       vec3 bodyRegion = beipiPattern ? UnderbellyColor : BodyColor;
-      vec3 bellyRegion = beipiPattern ? BodyColor : UnderbellyColor;
+      vec3 bellyRegion = (beipiPattern || rexPattern) ? BodyColor : UnderbellyColor;
       vec3 low = mix(mix(Detail1Color, MaleDisplayColor, p.r), mix(bodyRegion, Detail1Color, p.r), p.g);
       vec3 high = mix(mix(MarkingsColor, FlankColor, p.r), mix(bellyRegion, Detail1Color, p.r), p.g);
       vec3 skinColour = mix(low, high, p.b);
@@ -207,7 +217,7 @@ function bodyMaterial(pattern, normal, mask, packed, maskEncoding, colourMapping
         skinColour = mix(skinColour, MouthColor, m.g);
         skinColour = mix(skinColour, ClawsColor, m.b);
       }
-      diffuseColor.rgb *= skinColour;
+      diffuseColor.rgb *= clamp(skinColour, 0.0, 1.0);
     `);
   };
   material.userData.uniforms = uniforms;
@@ -220,16 +230,19 @@ function updateSkin() {
     const uniforms = material.userData.uniforms;
     if (uniforms) {
       uniforms.beipiPattern.value = active.entry.id === 'beipi';
-      for (const field of fields) uniforms[field].value.copy(colour(field));
-      uniforms.MaleDisplayColor.value.copy(colour(skin.bIsFemale ? 'BodyColor' : 'MaleDisplayColor'));
+      uniforms.rexPattern.value = active.entry.id === 'tyrannosaurus';
+      for (const field of fields) uniforms[field].value.copy(colour(field, true));
+      uniforms.MaleDisplayColor.value.copy(colour(skin.bIsFemale ? 'BodyColor' : 'MaleDisplayColor', true));
     } else material.color.copy(colour(material.userData.legacy ? 'BodyColor' : 'EyesColor'));
   }
   const unsupported = patternIndex(active.entry) !== skin.PatternIndex;
   const glitch = [...fields, 'EyesColor'].some(f => ['R', 'G', 'B'].some(c => skin[f][c] < 0 || skin[f][c] > 1));
   note.textContent = (age.value !== 'adult' ? `${age.selectedOptions[0].textContent} on adult geometry; growth proportions are unavailable. ` : '') +
-    'Approximate colour preview. Skin variation and game glitch effects are not simulated.' +
+    'Approximate colour preview. Skin variation is not simulated.' +
+    (active.entry.id === 'tyrannosaurus' ? ' T. rex uses an unverified mapping trial: Body colour covers green and cyan regions; separate Underbelly tint is not represented.' : '') +
+    (experimentalGlitches ? ' Experimental approximation: negative RGB magnitudes are compressed before blending; positive RGB values remain above-range. Alpha and glitter effects are not simulated; verify in-game.' : ' Normal preview: colour inputs are clamped to 0-1.') +
     (unsupported ? ' This pattern index is unavailable; showing pattern 0.' : '') +
-    (glitch ? ' Preview colours are clamped to 0–1; exported values are unchanged.' : '') +
+    (glitch ? ' Exported values are unchanged.' : '') +
     (!active.entry.mask ? ' This species has no teeth/mouth/claw mask.' : '') +
     (!active.entry.packed ? ' Legacy skin: only body tint and eye colour are previewed.' : '');
   const target = patternPath(active.entry);
@@ -356,6 +369,16 @@ async function loadSpecies() {
   age.disabled = false;
   try { if (!mini) localStorage.setItem('skinforge.viewer.species', id); } catch {  }
 }
+negativeControl?.addEventListener('input', () => {
+  negativeStrength = Number(negativeControl.value) / 100;
+  negativeOutput.value = negativeControl.value + '%';
+  updateSkin();
+});
+glitchPreview?.addEventListener('change', () => {
+  experimentalGlitches = glitchPreview.checked;
+  if (negativePanel) negativePanel.hidden = !experimentalGlitches;
+  updateSkin();
+});
 window.addEventListener('skinforge:skin-change', event => { skin = event.detail; updateSkin(); });
 select.disabled = false;
 select.addEventListener('change', loadSpecies);

@@ -135,12 +135,20 @@
           <output id="viewer-brightness-value" for="viewer-brightness">100%</output>
           <span id="viewer-brightness-help">Adjusts the lights shining on the dinosaur. Skin colours stay unchanged.</span>
         </div>
+        <label class="viewer-glitch-toggle"><input id="viewer-glitch-mode" type="checkbox" aria-describedby="viewer-glitch-mode-help"> Experimental glitch preview</label>
+        <p class="viewer-note" id="viewer-glitch-mode-help">Approximate glitch colours with reduced negative-value influence. Alpha and glitter effects are not simulated.</p>
+        <div class="viewer-lighting" id="viewer-negative-controls" hidden>
+          <label for="viewer-negative-strength">Negative influence</label>
+          <input id="viewer-negative-strength" type="range" min="0" max="200" step="5" value="100" aria-describedby="viewer-negative-help">
+          <output id="viewer-negative-value" for="viewer-negative-strength">100%</output>
+          <span id="viewer-negative-help">Lower to reduce black areas; raise for stronger negative colour effects. 100% is the experimental baseline, not the game's setting. Skin JSON stays unchanged.</span>
+        </div>
         <p class="viewer-release-notice" id="viewer-release-notice" role="status" hidden></p>
         <div class="viewer-stage" id="viewer-stage" aria-label="3D dinosaur preview">
           <p id="viewer-status" role="status">Starting 3D viewer…</p>
         </div>
         <p class="viewer-help">Drag to orbit · Scroll or pinch to zoom · Right-drag to pan · Arrow keys to orbit · + / − to zoom</p>
-        <p class="viewer-glitch-warning" id="viewer-glitch-warning" role="status" hidden><strong>Glitch values detected.</strong> This 3D viewer cannot show glitch effects. Apply the skin and view it in-game to see the glitches.</p>
+        <p class="viewer-glitch-warning" id="viewer-glitch-warning" role="status" hidden><strong>Glitch values detected.</strong> Try the experimental preview below the lighting controls. Always apply the skin in-game to check the actual glitch effects.</p>
         <p class="viewer-note" id="viewer-note">Approximate colour preview. Growth stages change the skin pattern on the adult mesh.</p>
       </section>
 
