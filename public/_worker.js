@@ -51,7 +51,6 @@ export default {
         headers.delete('Content-Length');
         return new Response(null, { status: 304, headers });
       }
-      // Stream original bytes without buffering large textures in Worker memory.
       const response = new Response(request.method === 'HEAD' ? null : object.body, { headers });
       if (request.method === 'GET') context.waitUntil(cache.put(cacheKey, response.clone()).catch(console.error));
       return response;

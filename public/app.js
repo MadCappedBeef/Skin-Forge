@@ -76,7 +76,6 @@ function updateRandomTheme(value) {
 
 function randomThemeColour(theme, random = Math.random) {
   if (!theme.colours.length) return Object.fromEntries(RGB_CHANNELS.map(channel => [channel, Math.floor(random() * 101) / 100]));
-  // Interpolate palette colours together so variation stays inside the theme.
   const pick = () => theme.colours[Math.floor(random() * theme.colours.length)];
   const first = pick(), second = pick(), blend = random();
   return Object.fromEntries(RGB_CHANNELS.map((channel, index) => {
@@ -569,7 +568,6 @@ function unglitchColours() {
   for (const { key } of COLOUR_FIELDS) {
     const rgb = RGB_CHANNELS.map(channel => next[key][channel]);
     if (rgb.some(value => value < 0 || value > 1)) {
-      // Positive channels retain their ratios; all-negative colours use relative intensity.
       const maximum = Math.max(...rgb);
       const minimum = Math.min(...rgb);
       const mapped = maximum > 0
@@ -646,7 +644,7 @@ elements.grid.addEventListener("input", event => {
 elements.grid.addEventListener("change", event => {
   const input = event.target;
   if (input.matches('input[type="number"][data-channel]') && input.dataset.before) {
-    try { history.push(JSON.parse(input.dataset.before)); } catch { /* no-op */ }
+    try { history.push(JSON.parse(input.dataset.before)); } catch {  }
     if (history.length > 60) history.shift();
     future = [];
     delete input.dataset.before;
@@ -666,7 +664,7 @@ elements.grid.addEventListener("click", event => {
     const key = lock.dataset.field;
     if (lockedColours.has(key)) lockedColours.delete(key);
     else lockedColours.add(key);
-    try { localStorage.setItem(STORAGE_KEYS.locks, JSON.stringify([...lockedColours])); } catch { /* Keep working in memory when storage is unavailable. */ }
+    try { localStorage.setItem(STORAGE_KEYS.locks, JSON.stringify([...lockedColours])); } catch {  }
     updateLockControls();
     return;
   }
@@ -771,11 +769,11 @@ for (const select of document.querySelectorAll("[data-random-theme]")) {
   }
   select.addEventListener("change", () => {
     updateRandomTheme(select.value);
-    try { localStorage.setItem(STORAGE_KEYS.theme, select.value); } catch { /* Keep the theme for this tab. */ }
+    try { localStorage.setItem(STORAGE_KEYS.theme, select.value); } catch {  }
   });
 }
 let storedRandomTheme = "any";
-try { storedRandomTheme = localStorage.getItem(STORAGE_KEYS.theme) || "any"; } catch { /* Use default. */ }
+try { storedRandomTheme = localStorage.getItem(STORAGE_KEYS.theme) || "any"; } catch {  }
 updateRandomTheme(storedRandomTheme);
 
 renderColourCards();

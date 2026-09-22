@@ -51,7 +51,6 @@ scene.add(key);
 const rim = new THREE.DirectionalLight(0x72dbc9, 0.6);
 rim.position.set(-3, 3, -4);
 scene.add(rim);
-// A new preference version resets older browsers once to the dimmer baseline.
 const BRIGHTNESS_STORAGE_KEY = 'skinforge.viewer.brightness.v2';
 brightness.value = '100';
 try {
@@ -59,7 +58,7 @@ try {
   const value = Number(saved);
   if (saved !== null && Number.isFinite(value) && value >= 0 && value <= 120) brightness.value = String(value);
   localStorage.setItem(BRIGHTNESS_STORAGE_KEY, brightness.value);
-} catch { /* Optional preference. */ }
+} catch {  }
 function updateBrightness() {
   const percent = Number(brightness.value);
   const strength = percent / 100;
@@ -72,7 +71,7 @@ function updateBrightness() {
 updateBrightness();
 brightness.addEventListener('input', () => {
   updateBrightness();
-  try { localStorage.setItem(BRIGHTNESS_STORAGE_KEY, brightness.value); } catch { /* Optional preference. */ }
+  try { localStorage.setItem(BRIGHTNESS_STORAGE_KEY, brightness.value); } catch {  }
 });
 const camera = new THREE.PerspectiveCamera(35, 1, 0.01, 100);
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -86,8 +85,6 @@ const assetURL = file => new URL('../' + file, import.meta.url).href;
 async function loadTexture(file) {
   if (!file) return null;
   const texture = await textures.loadAsync(assetURL(file));
-  // The exports include very large source PNGs. Bound GPU memory while retaining
-  // their source files untouched for future high-resolution exports.
   const limit = Math.min(2048, renderer.capabilities.maxTextureSize);
   const { width, height } = texture.image;
   if (width > limit || height > limit) {
@@ -163,9 +160,6 @@ function colour(field) {
   return new THREE.Color().setRGB(...['R', 'G', 'B'].map(c => THREE.MathUtils.clamp(value[c], 0, 1)));
 }
 
-// These textures are packed region masks, not colour photographs. The original
-// game shader is not supplied; interpolate the RGB cube's region colours as an
-// explicit approximation, preserving soft transitions in the compressed masks.
 function bodyMaterial(pattern, normal, mask, packed, maskEncoding, colourMapping) {
   const material = new THREE.MeshStandardMaterial({ map: pattern, normalMap: normal, roughness: 0.82 });
   if (!packed) {
@@ -180,24 +174,20 @@ function bodyMaterial(pattern, normal, mask, packed, maskEncoding, colourMapping
   uniforms.tmc = { value: mask || pattern };
   uniforms.hasTmc = { value: Boolean(mask) };
   uniforms.exclusiveTmc = { value: maskEncoding === 'rgb-regions' };
-  uniforms.beipiPatternTwo = { value: false };
+  uniforms.beipiPattern = { value: false };
   uniforms.stegoPattern = { value: colourMapping === 'stegosaurus' };
   material.onBeforeCompile = shader => {
     Object.assign(shader.uniforms, uniforms);
     shader.fragmentShader = fields.map(f => `uniform vec3 ${f};`).join('\n') +
-      '\nuniform sampler2D tmc;\nuniform bool hasTmc;\nuniform bool exclusiveTmc;\nuniform bool stegoPattern;\nuniform bool beipiPatternTwo;\n' + shader.fragmentShader;
+      '\nuniform sampler2D tmc;\nuniform bool hasTmc;\nuniform bool exclusiveTmc;\nuniform bool stegoPattern;\nuniform bool beipiPattern;\n' + shader.fragmentShader;
     shader.fragmentShader = shader.fragmentShader.replace('#include <map_fragment>', `
       vec3 p = texture2D(map, vMapUv).rgb;
-      // Beipi adult pattern 2 swaps the body and belly regions in the reference.
-      vec3 bodyRegion = beipiPatternTwo ? UnderbellyColor : BodyColor;
-      vec3 bellyRegion = beipiPatternTwo ? BodyColor : UnderbellyColor;
+      vec3 bodyRegion = beipiPattern ? UnderbellyColor : BodyColor;
+      vec3 bellyRegion = beipiPattern ? BodyColor : UnderbellyColor;
       vec3 low = mix(mix(Detail1Color, MaleDisplayColor, p.r), mix(bodyRegion, Detail1Color, p.r), p.g);
       vec3 high = mix(mix(MarkingsColor, FlankColor, p.r), mix(bellyRegion, Detail1Color, p.r), p.g);
       vec3 skinColour = mix(low, high, p.b);
       if (stegoPattern) {
-        // Stego's reference: red display, green belly, blue flank,
-        // cyan body, magenta markings, yellow detail. Darker mask pixels
-        // retain surface shading instead of mixing unrelated colour layers.
         float shade = max(p.r, max(p.g, p.b));
         vec3 region = p / max(shade, 0.00001);
         vec3 lower = mix(mix(Detail1Color, MaleDisplayColor, region.r),
@@ -208,8 +198,6 @@ function bodyMaterial(pattern, normal, mask, packed, maskEncoding, colourMapping
       }
       if (hasTmc) {
         vec3 m = texture2D(tmc, vMapUv).rgb;
-        // Some species mark body regions magenta/cyan, alongside RGB teeth/mouth/claws.
-        // Decode exclusive regions so overlapping channels do not overwrite skin.
         if (exclusiveTmc) m = vec3(m.r * (1.0 - m.g) * (1.0 - m.b),
                                  m.g * (1.0 - m.r) * (1.0 - m.b),
                                  m.b * (1.0 - m.r) * (1.0 - m.g));
@@ -229,7 +217,7 @@ function updateSkin() {
   for (const material of active.materials) {
     const uniforms = material.userData.uniforms;
     if (uniforms) {
-      uniforms.beipiPatternTwo.value = active.entry.id === 'beipi' && age.value === 'adult' && patternIndex(active.entry) === 2;
+      uniforms.beipiPattern.value = active.entry.id === 'beipi';
       for (const field of fields) uniforms[field].value.copy(colour(field));
       uniforms.MaleDisplayColor.value.copy(colour(skin.bIsFemale ? 'BodyColor' : 'MaleDisplayColor'));
     } else material.color.copy(colour(material.userData.legacy ? 'BodyColor' : 'EyesColor'));
@@ -351,7 +339,6 @@ async function loadSpecies() {
   const center = box.getCenter(new THREE.Vector3());
   const size = box.getSize(new THREE.Vector3());
   const scale = 3 / Math.max(size.x, size.y, size.z);
-  // Wrap the asset so its original node transforms stay intact.
   const root = new THREE.Group();
   root.add(gltf.scene);
   gltf.scene.position.sub(center);
@@ -365,14 +352,13 @@ async function loadSpecies() {
   stage.setAttribute('aria-busy', String(active.pendingPattern !== undefined));
   reset.disabled = rotate.disabled = false;
   age.disabled = false;
-  try { localStorage.setItem('skinforge.viewer.species', id); } catch { /* Optional preference. */ }
+  try { localStorage.setItem('skinforge.viewer.species', id); } catch {  }
 }
 window.addEventListener('skinforge:skin-change', event => { skin = event.detail; updateSkin(); });
 select.disabled = false;
 select.addEventListener('change', loadSpecies);
 age.addEventListener('change', () => {
   if (active) {
-    // Invalidate an in-flight pattern change even when returning to the current map.
     active.patternGeneration++;
     active.pendingPattern = undefined;
     stage.setAttribute('aria-busy', 'false');

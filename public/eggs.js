@@ -1,6 +1,5 @@
 "use strict";
 
-// Experimental simulation only: these rules are not verified Evrima mechanics.
 function generateEstimatedEgg(mother, father, motherChance, random = Math.random) {
   const sources = {};
   const pick = key => {

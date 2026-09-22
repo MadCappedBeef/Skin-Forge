@@ -12,7 +12,6 @@ export async function handleReport(request, env, send = (...args) => fetch(...ar
   } catch { return reply(503, 'Reporting is not configured for this deployment. The site owner needs to check DISCORD_REPORT_WEBHOOK in the matching Cloudflare environment and redeploy.'); }
   if (!request.headers.get('Content-Type')?.startsWith('multipart/form-data')) return reply(400, 'Invalid report format.');
   if (Number(request.headers.get('Content-Length')) > MAX_BODY) return reply(413, 'Attachments are too large. Use up to three images, 2 MB each.');
-  // Best-effort cooldown per Worker instance, also prevents concurrent submissions.
   const now = Date.now(), ip = request.headers.get('CF-Connecting-IP') || 'local';
   for (const [key, expiry] of recent) if (expiry <= now) recent.delete(key);
   if (recent.has(ip)) return reply(429, 'Please wait one minute before sending another report.');
@@ -47,7 +46,6 @@ export async function handleReport(request, env, send = (...args) => fetch(...ar
         if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw Error();
         skin = JSON.stringify(parsed, null, 2);
       } catch { return reply(400, 'The included skin code is not a valid JSON object.'); }
-      // Escape literal backticks as JSON escapes so strings cannot close the code block.
       const safe = skin.replace(/`/g, '\\u0060');
       const heading = '\n\n**Current skin JSON**\n';
       const available = 4096 - embeds[0].description.length - heading.length - 12;
@@ -77,11 +75,8 @@ export async function handleReport(request, env, send = (...args) => fetch(...ar
     deliveryAttempted = true;
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 20000);
-    // Workers supports follow/manual, not the browser's "error" redirect mode.
-    // Inspect redirects as failures instead of forwarding the private payload.
     try { response = await send(webhook.toString(), { method: 'POST', body, signal: controller.signal, redirect: 'manual' }); }
     catch (error) {
-      // Never log the exception message: it may contain the private webhook URL.
       const kind = controller.signal.aborted ? 'timeout' : error?.name === 'TypeError' ? 'network-or-runtime' : 'connection';
       console.error('Report delivery failed', { stage: 'discord-fetch', kind });
       return reply(502, `The report reached SkinForge, but the Discord connection failed (${kind}). Delivery is uncertain; check the channel before retrying.`);

@@ -1,8 +1,5 @@
 import * as THREE from 'three';
 
-// ActorX/UE Viewer chunk layout, independently implemented for the static mesh
-// preview. Reference: gildor2/UEViewer, Tools/MaxActorXImport/ActorXImporter.ms.
-// PSA animation and growth morph reconstruction are deliberately not inferred.
 export class PSKLoader {
   async loadAsync(url, signal) {
     const response = await fetch(url, { signal });
@@ -42,7 +39,6 @@ export class PSKLoader {
     const normalData = new Float32Array(points.count * 3);
     function vector(chunk, i, target) {
       const at = chunk.offset + i * 12;
-      // PSK Z-up -> Three.js Y-up, matching the exported model orientation.
       target[i * 3] = view.getFloat32(at, true);
       target[i * 3 + 1] = view.getFloat32(at + 8, true);
       target[i * 3 + 2] = -view.getFloat32(at + 4, true);
@@ -56,7 +52,6 @@ export class PSKLoader {
     const wedgeUV = new Float32Array(wedges.count * 2);
     for (let i = 0; i < wedges.count; i++) {
       const at = wedges.offset + i * 16;
-      // Standard PSK uses uint16 + padding; extended PSK uses uint32 when needed.
       const point = points.count > 65536 ? view.getUint32(at, true) : view.getUint16(at, true);
       if (point >= points.count) fail('wedge point index out of bounds');
       pointIndices[i] = point;
