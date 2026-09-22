@@ -1,0 +1,456 @@
+{
+  "source": "SkinViewer/assets",
+  "releaseStatusChecked": "2026-09-19",
+  "species": [
+    {
+      "id": "allosaurus",
+      "name": "Allosaurus",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Allosaurus/Mesh/SK_Allosaurus.psk?v=77f940414a889f33",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Allosaurus/Textures/T_Allosaurus_Adult_Pattern_1.png?v=ab276becff5d5bca",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Allosaurus/Textures/T_Allosaurus_Adult_Pattern_2.png?v=c8bf5f6c60bd9d23",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Allosaurus/Textures/T_Allosaurus_Adult_Pattern_3.png?v=9a00b8be1677c298"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Allosaurus/Textures/T_Allosaurus_Hatchling_Pattern.png?v=56b387ee935a0a12",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Allosaurus/Textures/T_Allosaurus_Juvenile_Pattern.png?v=8fd8015351f70dc1",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Allosaurus/Textures/T_Allosaurus_N.png?v=6c8c0fe3296d0eb7",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Allosaurus/Textures/T_Allosaurus_M.png?v=9e5fa05fd5f98e8f"
+    },
+    {
+      "id": "austro",
+      "name": "Austroraptor",
+      "releaseStatus": "released",
+      "maskEncoding": "rgb-regions",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Austroraptor/Mesh/SK_Austroraptor.psk?v=88ca61711ab9f822",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Austroraptor/Textures/T_Austroraptor_Adult_Pattern_1.png?v=2837fc76ba0e7cd8",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Austroraptor/Textures/T_Austroraptor_Adult_Pattern_2.png?v=7747fe858be86653",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Austroraptor/Textures/T_Austroraptor_Adult_Pattern_3.png?v=144107dd567d9fd2",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Austroraptor/Textures/T_Austroraptor_Adult_Pattern_Heron_M.png?v=09f0795f320ba437"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Austroraptor/Textures/T_Austroraptor_Hatchling_Pattern.png?v=9763995fd9c00295",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Austroraptor/Textures/T_Austroraptor_Juvenile_Pattern.png?v=bc8373404eefef04",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Austroraptor/Textures/T_Austroraptor_Adult_N.png?v=297ca9d8a29648b9",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Austroraptor/Textures/T_Austroraptor_M.png?v=187d2ce6fbe27ffd"
+    },
+    {
+      "id": "avaceratops",
+      "name": "Avaceratops",
+      "releaseStatus": "unreleased",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Avaceratops/Mesh/SK_Avaceratops.psk?v=7f772becf14d0e4d",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Avaceratops/Textures/T_Avaceratops_Adult_Pattern_1.png?v=3d51fb5b71941870"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Avaceratops/Textures/T_Avaceratops_Hatchling_Pattern.png?v=e52e253a36c2085c",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Avaceratops/Textures/T_Avaceratops_Juvenile_Pattern.png?v=e6c545cc56503fcb",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Avaceratops/Textures/T_Avaceratops_Normal.png?v=88fb8947cb7ac592",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Avaceratops/Textures/T_Avaceratops_Mask_TMC.png?v=bc194264bafc0719"
+    },
+    {
+      "id": "baryonyx",
+      "name": "Baryonyx",
+      "releaseStatus": "unreleased",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Baryonyx/Mesh/SK_Baryonyx.psk?v=54ef011de824e2f5",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Baryonyx/Textures/T_Baryonyx_Adult_Pattern_1.png?v=c17f9197d8fbf78d",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Baryonyx/Textures/T_Baryonyx_Adult_Pattern_2.png?v=2f9a274140068baf",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Baryonyx/Textures/T_Baryonyx_Adult_Pattern_3.png?v=81fc61ff63a698bb",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Baryonyx/Textures/T_Baryonyx_Adult_Pattern_4_Royal.png?v=a36a9f3d6f90bed2",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Baryonyx/Textures/T_Baryonyx_Adult_Pattern_5_Brindle.png?v=6489baef46ea8d50"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Baryonyx/Textures/T_Baryonyx_Hatchling_Pattern.png?v=558611fea0b8afea",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Baryonyx/Textures/T_Baryonyx_Juvenile_Pattern.png?v=34e66a965fe87e32",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Baryonyx/Textures/T_Baryonyx_N.png?v=a4f77ea4b5eeaf2e",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Baryonyx/Textures/T_Baryonyx_Mask_TMC.png?v=1d5b2cd322402eca"
+    },
+    {
+      "id": "beipi",
+      "name": "Beipiaosaurus",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Beipiaosaurus/Mesh/SK_Beipiaosaurus.psk?v=67327767bfb8f67b",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Beipiaosaurus/Textures/T_Beipiaosaurus_Pattern_Adult_1.png?v=a1e967bdc8c3bb61",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Beipiaosaurus/Textures/T_Beipiaosaurus_Pattern_Adult_2.png?v=a114d246e9a730a7",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Beipiaosaurus/Textures/T_Beipiaosaurus_Pattern_Adult_3.png?v=ac6074d288b95ada"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Beipiaosaurus/Textures/T_Beipiaosaurus_Pattern_Hatchling.png?v=3acc5739645dc0cc",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Beipiaosaurus/Textures/T_Beipiaosaurus_Pattern_Juvie.png?v=657ace79425ff116",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Beipiaosaurus/Textures/Beipaosaurus_Adult_Normal.png?v=e9ac12bd455fa049",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Beipiaosaurus/Textures/T_Beipiaosaurus_M.png?v=89c471138b4d6c60",
+      "maskEncoding": "rgb-regions"
+    },
+    {
+      "id": "camarasaurus",
+      "name": "Camarasaurus",
+      "releaseStatus": "unreleased",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Camarasaurus/Mesh/SK_Camarasaurus.psk?v=200d428467d67925",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Camarasaurus/Textures/T_Camarasaurus_Adult_Pattern_1.png?v=2ffa66e952481bcd"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Camarasaurus/Textures/T_Camarasaurus_Hatchling_Pattern.png?v=917bbb0f3446eeba",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Camarasaurus/Textures/T_Camarasaurus_Juvenile_Pattern.png?v=b9b3ebc64590f4eb",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Camarasaurus/Textures/T_Camarasaurus_Adult_Normal.png?v=a1d94570040b2666",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Camarasaurus/Textures/T_Camarasaurus_Mask_TMC.png?v=7af87d7b44c360ce"
+    },
+    {
+      "id": "carno",
+      "name": "Carnotaurus",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Carnotaurus/Mesh/SK_Carnotaurus.psk?v=d9792fb8a1554a90",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Carnotaurus/Textures/T_Carno_Adult_Male_Pattern_1.png?v=84e7731fd10ff658",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Carnotaurus/Textures/T_Carno_Adult_Pattern_2.png?v=ba0e290937f664d4",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Carnotaurus/Textures/T_Carnotaurus_Adult_Pattern_3.png?v=332e0f9131666455",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Carnotaurus/Textures/T_Carnotaurus_Adult_Pattern4.png?v=76ce88fb2d58abcf"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Carnotaurus/Textures/T_Carno_Hatchling_Pattern.png?v=062923ebf6b1511b",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Carnotaurus/Textures/T_Carno_Juvie_Pattern.png?v=42b259972a5bdb59",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Carnotaurus/Textures/T_Carno_Default_New_N.png?v=9937508f9620dd0f",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Carnotaurus/Textures/T_Carno_Adult_Mouth-Claws-Teeth.png?v=1af218e36ccfd432"
+    },
+    {
+      "id": "cerato",
+      "name": "Ceratosaurus",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Ceratosaurus/Mesh/SK_Ceratosaurus.psk?v=56c72e62a0c5a97b",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Ceratosaurus/Textures/T_Ceratosaurus_Adult_Pattern_1.png?v=4b0c31076d902469",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Ceratosaurus/Textures/T_Ceratosaurus_Adult_Pattern_2.png?v=d2e92bb3b4a66686",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Ceratosaurus/Textures/T_Ceratosaurus_Adult_Pattern_3.png?v=2cc66f8245fad657"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Ceratosaurus/Textures/T_Ceratosaurus_Hatchling_Pattern.png?v=e85e3b2e097d9c21",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Ceratosaurus/Textures/T_Ceratosaurus_Juvenile_Pattern.png?v=02e02d245c36adbc",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Ceratosaurus/Textures/T_Cerato_Adult_N.png?v=d3de5ecc141cdf8f",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Ceratosaurus/Textures/T_Cerato_Adult_Mouth-Teeth-Claws.png?v=a242d5e60d13e838"
+    },
+    {
+      "id": "deino",
+      "name": "Deinosuchus",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Deinosuchus/Mesh/SK_Deinosuchus.psk?v=a0cbd04fe587ad28",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Deinosuchus/Textures/T_Deinosuchus_Adult_Pattern_M.png?v=b66b5fbe72c0695f",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Deinosuchus/Textures/T_Deino_Adult_Pattern_2.png?v=9e8404bfbd51b3be",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Deinosuchus/Textures/T_Deinosuchus_Adult_Pattern_3.png?v=02e33e2d61fb9faa"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Deinosuchus/Textures/T_Deino_Hatchling_Pattern.png?v=1964a273b91f4946",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Deinosuchus/Textures/T_Deinosuchus_Juvie_Pattern.png?v=04a4a8fdc330758c",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Deinosuchus/Textures/T_Deinosuchus_N.png?v=2f3ca1a567d57b71",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Deinosuchus/Textures/T_Deinosuchus_Detail_M.png?v=2f46e1f9e2c7aabe"
+    },
+    {
+      "id": "dibble",
+      "name": "Diabloceratops",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Diabloceratops/Mesh/SK_Diabloceratops.psk?v=5a683dfa63071259",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Diabloceratops/Textures/T_Diabloceratops_Adult_Pattern_1.png?v=c4f56da3de33aa47",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Diabloceratops/Textures/T_Diabloceratops_Adult_Pattern_2.png?v=c4efcf39d41409c6",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Diabloceratops/Textures/T_Diabloceratops_Adult_Pattern_3.png?v=e707b341ffeb4722"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Diabloceratops/Textures/T_Diabloceratops_Hatch_Pattern.png?v=ad661a03b67ab9bf",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Diabloceratops/Textures/T_Diabloceratops_Juvie_Pattern.png?v=cdb379a635c4072d",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Diabloceratops/Textures/T_Diablo_Adult_N.png?v=08beeecfc38a4bd4",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Diabloceratops/Textures/T_Diablo_Adult_Mouth-Claws.png?v=c8ddb7c60e21d3b6"
+    },
+    {
+      "id": "dilo",
+      "name": "Dilophosaurus",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Dilophosaurus/Mesh/SK_Dilophosaurus.psk?v=6ce50b465954952d",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Dilophosaurus/Textures/T_Dilophosaurus_Adult_Pattern_Default.png?v=aa7f7f86b4e79444",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Dilophosaurus/Textures/T_Dilophosaurus_Adult_Pattern_2.png?v=02f12eaaaba18762",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Dilophosaurus/Textures/T_Dilophosaurus_Adult_Pattern_3.png?v=aab03a69a4a179b5"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Dilophosaurus/Textures/T_Dilophosaurus_Hatchling_Pattern.png?v=cddeb3d9347755d4",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Dilophosaurus/Textures/T_Dilophosaurus_Juvenile_Pattern.png?v=6cc4ed4c4869aa6e",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Dilophosaurus/Textures/T_Dilo_Base_N.png?v=37613bba0a423110",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Dilophosaurus/Textures/T_Dilophosaurus_M.png?v=01ff9725d9c2aa2c",
+      "maskEncoding": "rgb-regions"
+    },
+    {
+      "id": "dryo",
+      "name": "Dryosaurus",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Dryosaurus/Mesh/SK_Dryosaurus.psk?v=00027f06e44498cf",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Dryosaurus/Textures/T_Dryosaurus_Adult_Pattern_1.png?v=747ad8290460b024",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Dryosaurus/Textures/T_Dryosaurus_Adult_Pattern_2.png?v=f11975f573515ce0",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Dryosaurus/Textures/T_Dryosaurus_Adult_Pattern_3.png?v=d1c84e4797ce96c9"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Dryosaurus/Textures/T_Dryosaurus_Hatchling_Pattern.png?v=5c84f997453f2e44",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Dryosaurus/Textures/T_Dyosaurus_Juvenile_Pattern.png?v=362632a170ab03e0",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Dryosaurus/Textures/T_Dryosaurus_N.png?v=5fcaba2f606dcb00",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Dryosaurus/Textures/T_Dryosaurus_Detail_M.png?v=6c3f84ee5754de8f"
+    },
+    {
+      "id": "galli",
+      "name": "Gallimimus",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Gallimimus/Mesh/SK_Gallimimus.psk?v=a536723748e103a1",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Gallimimus/Textures/T_Gallimimus_Adult_Pattern_1.png?v=cc0be592ad0728e3",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Gallimimus/Textures/T_Gallimimus_Adult_Pattern_2.png?v=252397c3b3143cfd",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Gallimimus/Textures/T_Gallimimus_Adult_Pattern_3.png?v=b4daad353bf817d7"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Gallimimus/Textures/T_Gallimimus_Hatchling_Pattern.png?v=02cb19ab1072a4b2",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Gallimimus/Textures/T_Gallimimus_Juvenile_Pattern.png?v=cb7d943b88ec6ee5",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Gallimimus/Textures/T_Galli_Adult_Base_N.png?v=8e62981b86a2d9db",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Gallimimus/Textures/T_Gallimimus_Adult_TMC.png?v=d7d9c4a22c1869f7"
+    },
+    {
+      "id": "herrera",
+      "name": "Herrerasaurus",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Herrerasaurus/Mesh/SK_Herrerasaurus.psk?v=75570b8410a29040",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Herrerasaurus/Textures/Herrera_Adult_Pattern.png?v=63cb373578484166",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Herrerasaurus/Textures/Herrera_Adult_Pattern_2.png?v=a5e1be9b48155569",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Herrerasaurus/Textures/T_Herrerasaurus_Adult_Pattern_3.png?v=088b8ebb7db7cb4f",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Herrerasaurus/Textures/T_Herrerasaurus_Adult_Pattern_4.png?v=1deef58fc1d454c7",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Herrerasaurus/Textures/T_Herrerasaurus_Adult_Pattern_5.png?v=3795173170e8f83e"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Herrerasaurus/Textures/Herrera_Hatch_Pattern.png?v=f04e3a913964c084",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Herrerasaurus/Textures/Herrera_Juvie_Pattern.png?v=976a37f05f97ee9b",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Herrerasaurus/Textures/T_Herrerasaurus_N.png?v=f1e8e01614e9b92e",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Herrerasaurus/Textures/T_Herrerasaurus_M.png?v=91223506a6ac6949"
+    },
+    {
+      "id": "hypsi",
+      "name": "Hypsilophodon",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Hypsilophodon/Mesh/SK_Hypsilophodon.psk?v=6ca8be0d354c4a13",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Hypsilophodon/Textures/T_Hypsilophodon_Adult_Pattern_1_Male.png?v=61872a4b4c61001c",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Hypsilophodon/Textures/T_Hypsilophodon_Adult_Pattern_2_Male.png?v=27314d3f2612761f",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Hypsilophodon/Textures/T_Hypsilophodon_Adult_Pattern_3_Male.png?v=15e38686923e41f1"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Hypsilophodon/Textures/T_Hypsilophodon_Hatchling_Pattern.png?v=9ca865661bab41fc",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Hypsilophodon/Textures/T_Hypsilophodon_Juvenile_Pattern.png?v=b38442db4799b60a",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Hypsilophodon/Textures/T_Hypsilophodon_N.png?v=fea5171de78a5dc9",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Hypsilophodon/Textures/T_Hypsilophodon_M.png?v=549f0f84347a957c",
+      "maskEncoding": "rgb-regions"
+    },
+    {
+      "id": "kentro",
+      "name": "Kentrosaurus",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Kentrosaurus/Mesh/SK_Kentrosaurus.psk?v=3050bea28db5b9b3",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Kentrosaurus/Textures/T_Kentrosaurus_Adult_Pattern_1.png?v=e105f839139949a6",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Kentrosaurus/Textures/T_Kentrosaurus_Adult_Pattern_2.png?v=e8c75460ef59f5da",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Kentrosaurus/Textures/T_Kentrosaurus_Adult_Pattern_3.png?v=4d89f742165ea6f0"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Kentrosaurus/Textures/T_Kentrosaurus_Hatchling_Pattern.png?v=c0ee6c98274a7c7a",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Kentrosaurus/Textures/T_Kentrosaurus_Juvie_Pattern.png?v=beb5a4a3252c1324",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Kentrosaurus/Textures/T_Kentrosaurus_Normal.png?v=eea1a03ce2cf4b4a",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Kentrosaurus/Textures/T_Kentrosaurus_Adult_Mask_TMC.png?v=c282dd773924af4c"
+    },
+    {
+      "id": "maiasaura",
+      "name": "Maiasaura",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Maiasaura/Mesh/SK_Maiasaura.psk?v=440c27bd5485a918",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Maiasaura/Textures/T_Maiasaura_Pattern_Adult_1.png?v=c0cd03b0463ce7ef",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Maiasaura/Textures/T_Maiasaura_Pattern_Adult_2.png?v=76b166563eb04a74",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Maiasaura/Textures/T_Maiasaura_Pattern_Adult_3.png?v=c353c6201a0f225e"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Maiasaura/Textures/T_Maiasaura_Pattern_Hatchling.png?v=47a94ffa9cc50590",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Maiasaura/Textures/T_Maiasaura_Pattern_Juvie.png?v=1fa64ca1dc9ae8d1",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Maiasaura/Textures/T_Maiasaura_N.png?v=121150f6f2044373",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Maiasaura/Textures/T_Maiasaura_M.png?v=714a233c288180e9"
+    },
+    {
+      "id": "omni",
+      "name": "Omniraptor",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Omniraptor/Mesh/SK_Omniraptor.psk?v=58bc1ffb6c0e9bc0",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Omniraptor/Textures/T_Omniraptor_Adult_Pattern_1.png?v=d4bc316a82882cc8",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Omniraptor/Textures/T_Omniraptor_Adult_Pattern_2.png?v=d0a4ede70524ccce",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Omniraptor/Textures/T_Omniraptor_Adult_Pattern_3.png?v=9df582c5452e5d89",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Omniraptor/Textures/T_Omniraptor_Adult_Pattern_4.png?v=0319e12a73075d71",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Omniraptor/Textures/T_Omniraptor_Adult_Pattern_Desert.png?v=15ff299e862f1bb2",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Omniraptor/Textures/T_Omniraptor_Adult_Pattern_M.png?v=d4bc316a82882cc8",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Omniraptor/Textures/T_Omniraptor_Adult_Pattern_Python.png?v=2e610fcc788eb5c1"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Omniraptor/Textures/T_Omniraptor_Hatchling_Pattern.png?v=f5e06013388a7929",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Omniraptor/Textures/T_Omniraptor_Juvenile_Pattern.png?v=5e980d83c656f125",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Omniraptor/Textures/T_Omniraptor_N.png?v=47d1ec6ab1a25c1f",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Omniraptor/Textures/T_Omniraptor_Detail_M.png?v=448da12029e6838e"
+    },
+    {
+      "id": "oviraptor",
+      "name": "Oviraptor",
+      "releaseStatus": "unreleased",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Oviraptor/Mesh/SK_Oviraptor.psk?v=a754fc2260bcfd0e",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Oviraptor/Textures/T_Oviraptor_Adult_Pattern_1.png?v=ededb785107375b5",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Oviraptor/Textures/T_Oviraptor_Adult_Pattern_2.png?v=77f0e5d7f7c3c686",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Oviraptor/Textures/T_Oviraptor_Adult_Pattern_3.png?v=1bacdb0138dd70ea"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Oviraptor/Textures/T_Oviraptor_Hatchling_Pattern.png?v=17584c4715e7d6aa",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Oviraptor/Textures/T_Oviraptor_Juvenile_Pattern.png?v=3e040e2e30a2f6e9",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Oviraptor/Textures/T_Oviraptor_Adult_Body_Normals.png?v=12352dfe6dcc1fb0",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Oviraptor/Textures/T_Oviraptor_Mask_TMC.png?v=fb3161ef74334015",
+      "maskEncoding": "rgb-regions"
+    },
+    {
+      "id": "pachy",
+      "name": "Pachycephalosaurus",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Pachycephalosaurus/Mesh/SK_Pachycephalosaurus.psk?v=189b7178842cdbbc",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Pachycephalosaurus/Textures/T_Pachycephalosaurus_Adult_Pattern_1.png?v=78ea2a8cf5b8fe4b",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Pachycephalosaurus/Textures/T_Pachycephalosaurus_Adult_Pattern_2.png?v=fb01034417e9d436",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Pachycephalosaurus/Textures/T_Pachycephalosaurus_Adult_Pattern_3.png?v=5ee99fff3f0f603e",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Pachycephalosaurus/Textures/T_Pachycephalosaurus_Adult_Pattern_Ram_Male.png?v=f8eb5224f2980a88",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Pachycephalosaurus/Textures/T_Pachycephalosaurus_Adult_Pattern_TSL.png?v=163e2a8b08c4638c"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Pachycephalosaurus/Textures/T_Pachycephalosaurus_Hatchling_Pattern.png?v=4ac340e3b90a76d0",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Pachycephalosaurus/Textures/T_Pachycephalosaurus_Juvenile_Pattern.png?v=f26376d8b69a428c",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Pachycephalosaurus/Textures/T_Pachy_Default_New_N.png?v=7909d70057c960b0",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Pachycephalosaurus/Textures/T_Pachycephalosaurus_Mask_TMC.png?v=a98e7a87f4daf67f"
+    },
+    {
+      "id": "parasaurolophus",
+      "name": "Parasaurolophus",
+      "releaseStatus": "unreleased",
+      "model": null,
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Parasaurolophus/Textures/T_Parasaurolophus_Adult_Pattern_M.png?v=bd378fd3d4475260"
+      ],
+      "hatchling": null,
+      "juvenile": null,
+      "normal": null,
+      "mask": null
+    },
+    {
+      "id": "pter",
+      "name": "Pteranodon",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Pteranodon/Mesh/SK_Pteranodon.psk?v=ba0508ac173ba49e",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Pteranodon/Textures/T_Pteranodon_Adult_Pattern_1.png?v=b234ee111847e1e7",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Pteranodon/Textures/T_Pteranodon_Adult_Pattern_2.png?v=b94323a2a937d93c",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Pteranodon/Textures/T_Pteranodon_Adult_Pattern_3.png?v=59ccfcaad0354fac"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Pteranodon/Textures/T_Pteranodon_Hatcling_Pattern.png?v=8ec24e42fbee2d8f",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Pteranodon/Textures/T_Pteranodon_Juvenile_Pattern.png?v=3541c6f9d21e76c1",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Pteranodon/Textures/T_Pteranodon_N.png?v=a14580817df69181",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Pteranodon/Textures/T_Pteranodon_Detail_M.png?v=2a2801be0d4b458a"
+    },
+    {
+      "id": "stego",
+      "name": "Stegosaurus",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Stegosaurus/Mesh/SK_Stegosaurus.psk?v=a4b6efdde755c3e2",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Stegosaurus/Textures/T_Stegosaurus_Adult_Pattern_1.png?v=e774baee1ff4d5c3",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Stegosaurus/Textures/T_Stegosaurus_Adult_Pattern_2.png?v=7a4d96ccbb691f11",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Stegosaurus/Textures/T_Stegosaurus_Adult_Pattern_3.png?v=71624238766dca7c",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Stegosaurus/Textures/T_Stegosaurus_Adult_Pattern_White-Tipped.png?v=636f806e681ce834"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Stegosaurus/Textures/T_Stegosaurus_Hatchling_Pattern.png?v=be79943dfbd2c38a",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Stegosaurus/Textures/T_Stegosaurus_Juvenile_Pattern.png?v=97ee4845c0a12ae6",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Stegosaurus/Textures/T_Stegosaurus_N.png?v=82491f766ca571e7",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Stegosaurus/Textures/T_Stegosaurus_Detail_M.png?v=2404855015aa2f35",
+      "colourMapping": "stegosaurus"
+    },
+    {
+      "id": "teno",
+      "name": "Tenontosaurus",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Tenontosaurus/Mesh/SK_Tenontosaurus.psk?v=a1461ace09cdfed7",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Tenontosaurus/Textures/T_Tenontosaurus_Adult_Pattern_1.png?v=294a7bd3a03f9427",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Tenontosaurus/Textures/T_Tenontosaurus_Adult_Pattern_2.png?v=7c1422f34ac11b9c",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Tenontosaurus/Textures/T_Tenontosaurus_Adult_Pattern_3.png?v=1801cf1196630844"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Tenontosaurus/Textures/T_Tenontosaurus_Hatchling_Pattern.png?v=0fe3967ea3aa0c27",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Tenontosaurus/Textures/T_Tenontosaurus_Juvenile_Pattern.png?v=4bce57ae38589e2a",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Tenontosaurus/Textures/T_Tenontosaurus_N.png?v=5a71a84ed9f2ad48",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Tenontosaurus/Textures/T_Tenontosaurus_Detail_M.png?v=0b79c8cbcc129bd6"
+    },
+    {
+      "id": "triceratops",
+      "name": "Triceratops",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Triceratops/Mesh/SK_Triceratops.psk?v=164aa431892cb063",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Triceratops/Textures/T_Triceratops_Adult_Pattern_1.png?v=770eccd14a911747",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Triceratops/Textures/T_Triceratops_Adult_Pattern_2.png?v=d2e4154911987f61",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Triceratops/Textures/T_Triceratops_Adult_Pattern_3.png?v=eb03272dc7db370d",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Triceratops/Textures/T_Triceratops_Adult_Pattern_4.png?v=a08fb5f77d838bf0",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Triceratops/Textures/T_Triceratops_Adult_Pattern_5.png?v=00cde71c81a7f8ce",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Triceratops/Textures/T_Triceratops_Adult_Pattern_6.png?v=0a06eb3e36736fbc"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Triceratops/Textures/T_Triceratops_Hatchling_Pattern.png?v=2445ae57541b9e46",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Triceratops/Textures/T_Triceratops_Juvenile_Pattern.png?v=92b2afcf8713831b",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Triceratops/Textures/T_Triceratops_N.png?v=562a923a5f5e47e3",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Triceratops/Textures/T_Triceratops_Detail_M.png?v=1b225c400a0c8c49"
+    },
+    {
+      "id": "troodon",
+      "name": "Troodon",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Troodon/Mesh/SK_Troodon.psk?v=dff18f7084818668",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Troodon/Textures/T_Troodon_Adult_Pattern_1.png?v=0e7f611290c5e593",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Troodon/Textures/T_Troodon_Adult_Pattern_2.png?v=b4435f56f58896c3",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Troodon/Textures/T_Troodon_Adult_Pattern_3.png?v=c39484cd013bb562"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Troodon/Textures/T_Troodon_Hatchling_Pattern.png?v=5ead5081b1dfeae6",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Troodon/Textures/T_Troodon_Juvenile_Pattern.png?v=56f843ef965f748c",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Troodon/Textures/T_Troodon_N.png?v=e2d6a84b81aeed4c",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Troodon/Textures/T_Troodon_Detail_M.png?v=54967077e36bf9bd"
+    },
+    {
+      "id": "tyrannosaurus",
+      "name": "Tyrannosaurus",
+      "releaseStatus": "released",
+      "model": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Tyrannosaurus/Mesh/SK_Tyrannosaurus.psk?v=47208def239a5c1c",
+      "packed": true,
+      "patterns": [
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Tyrannosaurus/Textures/T_Tyrannosaurus_Adult_Pattern_1.png?v=95c31a2b1be28178",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Tyrannosaurus/Textures/T_Tyrannosaurus_Adult_Pattern_2.png?v=9c77fc9ca6a1cc83",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Tyrannosaurus/Textures/T_Tyrannosaurus_Adult_Pattern_3.png?v=059edf85a0f4095e",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Tyrannosaurus/Textures/T_Tyrannosaurus_Adult_Pattern_4__Grizzly_V1__3_.png?v=b25258941ec9c759",
+        "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Tyrannosaurus/Textures/T_Tyrannosaurus_Adult_Pattern_Simple.png?v=11357d56fd7cd673"
+      ],
+      "hatchling": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Tyrannosaurus/Textures/T_Tyrannosaurus_Hatchling_Pattern.png?v=f552b34bf452afd5",
+      "juvenile": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Tyrannosaurus/Textures/T_Tyrannosaurus_Juvie_Pattern.png?v=c1e0887fdc968f13",
+      "normal": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Tyrannosaurus/Textures/T_Tyrannosaurus_N.png?v=a9ad02a22152e94f",
+      "mask": "SkinViewer/assets/TheIsle/Characters/Dinosaurs/Tyrannosaurus/Textures/T_Tyrannosaurus_Mask_TMC.png?v=49df10eef7691b78"
+    }
+  ]
+}

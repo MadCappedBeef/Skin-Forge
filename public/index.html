@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A local editor and 3D preview for The Isle server skin JSON.">
+  <title>Skinforge — The Isle Skin JSON Tool</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <header class="app-header">
+    <a class="brand" href="#top" aria-label="Skinforge home">
+      <span class="brand-mark" aria-hidden="true"><i></i></span>
+      <span>
+        <strong>SKINFORGE</strong>
+        <small>THE ISLE // JSON STUDIO</small>
+      </span>
+    </a>
+    <div class="header-status">
+      <button class="button button-quiet" id="report-button" type="button" aria-haspopup="dialog" aria-controls="report-dialog">Report an issue</button>
+      <button class="button button-quiet" id="guide-button" type="button" aria-haspopup="dialog" aria-controls="guide-dialog">Guide</button>
+      <span class="status-dot"></span>
+      <span id="save-status">Saved locally</span>
+      <button class="icon-button" id="undo-button" type="button" title="Undo" aria-label="Undo" disabled>↶</button>
+      <button class="icon-button" id="redo-button" type="button" title="Redo" aria-label="Redo" disabled>↷</button>
+    </div>
+  </header>
+
+  <main class="workspace" id="top">
+    <aside class="left-rail">
+      <section class="panel import-panel">
+        <div class="eyebrow">START HERE</div>
+        <h2>Load a skin</h2>
+        <p>Import a JSON file or paste a code into the output panel.</p>
+        <button class="button button-primary button-wide" id="upload-button" type="button">
+          <span aria-hidden="true">↑</span> Open JSON file
+        </button>
+        <input id="file-input" type="file" accept="application/json,.json" multiple hidden>
+      </section>
+
+      <section class="panel saved-panel">
+        <div class="panel-heading">
+          <div>
+            <div class="eyebrow">YOUR LIBRARY</div>
+            <h2>Saved skins</h2>
+          </div>
+          <button class="text-button" id="save-preset-button" type="button">+ Save current</button>
+        </div>
+        <div class="saved-list" id="saved-list"></div>
+      </section>
+
+    </aside>
+
+    <section class="editor-column">
+      <section class="panel identity-panel">
+        <div class="identity-title">
+          <div>
+            <div class="eyebrow">ACTIVE SKIN</div>
+            <input id="skin-name" class="skin-name-input" value="Untitled skin" aria-label="Skin name">
+          </div>
+          <span class="schema-pill">SERVER SCHEMA · 10 COLOURS</span>
+        </div>
+
+        <div class="identity-controls">
+          <fieldset class="segmented-field">
+            <legend>Sex</legend>
+            <div class="segmented">
+              <label><input type="radio" name="sex" value="male" checked><span>Male</span></label>
+              <label><input type="radio" name="sex" value="female"><span>Female</span></label>
+            </div>
+          </fieldset>
+          <label class="number-control">
+            <span>Skin variation</span>
+            <input id="skin-variation" type="number" step="1" value="0">
+          </label>
+          <label class="number-control">
+            <span>Pattern index</span>
+            <input id="pattern-index" type="number" step="1" value="0">
+          </label>
+          <div class="identity-actions">
+            <button class="button button-quiet" id="random-button" type="button">Random colours</button>
+            <button class="button button-quiet danger-hover" id="reset-button" type="button">Reset base</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel random-theme-panel" aria-labelledby="random-theme-title">
+        <label id="random-theme-title" for="random-theme">Random colour theme</label>
+        <div class="random-theme-controls">
+          <select id="random-theme" data-random-theme aria-describedby="random-theme-description"></select>
+          <div id="random-theme-swatches" class="random-theme-swatches" aria-hidden="true"></div>
+        </div>
+        <p id="random-theme-description"></p>
+      </section>
+
+      <section class="panel viewer-panel" aria-labelledby="viewer-title">
+        <div class="panel-heading">
+          <div><div class="eyebrow">LIVE PREVIEW</div><h2 id="viewer-title">3D skin viewer</h2></div>
+          <span class="count-pill" id="viewer-count">PSK MODELS</span>
+        </div>
+        <div class="viewer-toolbar">
+          <label for="viewer-species">Species <select id="viewer-species" disabled></select></label>
+          <label for="viewer-age">Skin stage <select id="viewer-age" disabled>
+            <option value="adult">Adult skin</option>
+            <option value="juvenile">Juvenile skin</option>
+            <option value="hatchling">Hatchling skin</option>
+          </select></label>
+          <button class="button button-quiet" id="viewer-reset" type="button" disabled>Reset view</button>
+          <button class="button button-quiet" id="viewer-rotate" type="button" aria-pressed="false" disabled>Auto rotate</button>
+        </div>
+        <div class="viewer-lighting">
+          <label for="viewer-brightness">Light intensity</label>
+          <input id="viewer-brightness" type="range" min="0" max="120" step="5" value="100" aria-describedby="viewer-brightness-help">
+          <output id="viewer-brightness-value" for="viewer-brightness">100%</output>
+          <span id="viewer-brightness-help">Adjusts the lights shining on the dinosaur. Skin colours stay unchanged.</span>
+        </div>
+        <p class="viewer-release-notice" id="viewer-release-notice" role="status" hidden></p>
+        <div class="viewer-stage" id="viewer-stage" aria-label="3D dinosaur preview">
+          <p id="viewer-status" role="status">Starting 3D viewer…</p>
+        </div>
+        <p class="viewer-help">Drag to orbit · Scroll or pinch to zoom · Right-drag to pan · Arrow keys to orbit · + / − to zoom</p>
+        <p class="viewer-glitch-warning" id="viewer-glitch-warning" role="status" hidden><strong>Glitch values detected.</strong> This 3D viewer cannot show glitch effects. Apply the skin and view it in-game to see the glitches.</p>
+        <p class="viewer-note" id="viewer-note">Approximate colour preview. Growth stages change the skin pattern on the adult mesh.</p>
+      </section>
+
+      <section class="panel egg-panel" aria-labelledby="egg-title">
+        <details>
+          <summary id="egg-title">Egg generator <span class="egg-badge">EXPERIMENTAL</span></summary>
+          <p>Explore estimated offspring from two parent skins. This is a simulation, not verified Evrima inheritance or a prediction of your actual eggs.</p>
+          <p>Select the parents' species in the 3D viewer first. Use skins from the same species; skin JSON does not identify the species.</p>
+          <div class="egg-parents">
+            <div>
+              <label for="egg-mother">Mother's skin JSON</label>
+              <textarea id="egg-mother" rows="5" spellcheck="false" placeholder="Paste mother's skin JSON"></textarea>
+              <div class="egg-actions">
+                <button class="button button-quiet" type="button" data-egg-current="mother">Use current skin</button>
+                <button class="button button-quiet" type="button" data-egg-import="mother">Open JSON</button>
+                <input id="egg-mother-file" type="file" accept=".json,application/json" hidden>
+              </div>
+            </div>
+            <div>
+              <label for="egg-father">Father's skin JSON</label>
+              <textarea id="egg-father" rows="5" spellcheck="false" placeholder="Paste father's skin JSON"></textarea>
+              <div class="egg-actions">
+                <button class="button button-quiet" type="button" data-egg-current="father">Use current skin</button>
+                <button class="button button-quiet" type="button" data-egg-import="father">Open JSON</button>
+                <input id="egg-father-file" type="file" accept=".json,application/json" hidden>
+              </div>
+            </div>
+          </div>
+          <div class="egg-influence">
+            <label for="egg-influence">Parent influence</label>
+            <input id="egg-influence" type="range" min="0" max="100" step="5" value="50" aria-describedby="egg-rules">
+            <output id="egg-influence-value" for="egg-influence">Mother 50% / Father 50%</output>
+          </div>
+          <p id="egg-rules">Each colour's RGB is picked intact from one parent using these chances, not blended. Pattern and variation come together from one parent using the same chances. Sex is random (50/50); alpha (A) is set to 1. Editor colour locks do not apply. These are experimental rules; 50/50 is a neutral starting point, not a measured game probability.</p>
+          <button id="egg-generate" class="button button-primary" type="button">Generate 6 estimated eggs</button>
+          <p id="egg-status" role="status" aria-live="polite">Parents and eggs stay in this tab until you reload. Download any results you want to keep.</p>
+          <div id="egg-results" class="egg-results"></div>
+        </details>
+      </section>
+
+      <section class="panel glitch-lab">
+        <div class="panel-heading lab-heading">
+          <div>
+            <div class="eyebrow">GLITCH LAB</div>
+            <h2>Build a custom glitch</h2>
+          </div>
+          <p>Values outside 0–1 are kept exactly as entered.</p>
+        </div>
+        <div class="lab-controls">
+          <label>
+            <span>Target layer</span>
+            <select id="lab-target"></select>
+          </label>
+          <label>
+            <span>Effect</span>
+            <select id="lab-mode">
+              <option value="positive">Positive glitch</option>
+              <option value="negative">Negative glitch</option>
+              <option value="positiveBleed">Positive blowout / bleed</option>
+              <option value="negativeBleed">Negative blowout / bleed</option>
+              <option value="outline">Neutral outline</option>
+            </select>
+          </label>
+          <label>
+            <span>Glitch colour</span>
+            <select id="lab-colour">
+              <option value="red">Red</option>
+              <option value="green">Green</option>
+              <option value="blue">Blue</option>
+              <option value="cyan">Cyan</option>
+              <option value="magenta">Magenta</option>
+              <option value="yellow">Yellow</option>
+              <option value="white">White</option>
+            </select>
+          </label>
+          <label>
+            <span>Active value</span>
+            <input id="lab-active" type="number" step="any" value="100000">
+          </label>
+          <label>
+            <span>Quiet value</span>
+            <input id="lab-quiet" type="number" step="any" value="10">
+          </label>
+          <button class="button button-primary lab-apply" id="lab-apply" type="button">Apply to layer →</button>
+        </div>
+      </section>
+
+      <section class="colour-section">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">CHANNEL EDITOR</div>
+            <h1>Skin colours</h1>
+          </div>
+          <div class="legend">
+            <span><i class="legend-dot normal"></i> Normal 0–1</span>
+            <span><i class="legend-dot glitch"></i> Glitch value</span>
+          </div>
+        </div>
+        <p class="colour-lock-help">Lock a colour to keep its values when randomising. You can still edit locked colours manually.</p>
+        <div class="colour-grid" id="colour-grid"></div>
+      </section>
+    </section>
+
+    <aside class="right-rail">
+      <section class="panel output-panel" id="drop-zone">
+        <div class="panel-heading">
+          <div>
+            <div class="eyebrow">SERVER OUTPUT</div>
+            <h2>Skin JSON</h2>
+          </div>
+          <span class="validity valid" id="json-validity"><i></i> Valid</span>
+        </div>
+        <p class="output-note">Live output. You can also paste one of your existing codes here, then load it into the editor.</p>
+        <textarea id="json-output" spellcheck="false" aria-label="Skin JSON output" aria-describedby="json-error" aria-invalid="false"></textarea>
+        <p class="json-error" id="json-error" role="status" aria-live="polite" hidden></p>
+        <div class="drop-hint" id="drop-hint">Drop a .json file here</div>
+        <div class="output-actions">
+          <label class="output-theme-label" for="random-output-theme">Random colour theme
+            <select id="random-output-theme" data-random-theme></select>
+          </label>
+          <button class="button button-quiet" id="load-code-button" type="button">Load pasted JSON</button>
+          <button class="button button-quiet" id="random-output-button" type="button">Random colours</button>
+          <button class="button button-quiet" id="copy-button" type="button">Copy</button>
+          <button class="button button-primary" id="download-button" type="button">Download</button>
+        </div>
+        <div class="output-meta">
+          <span id="character-count">0 characters</span>
+          <span>Stored only in this browser</span>
+        </div>
+      </section>
+
+      <section class="panel safety-panel">
+        <div class="safety-icon">!</div>
+        <div>
+          <strong>Glitch values are experimental</strong>
+          <p>Different servers or game updates may render them differently. Keep a copy of a working skin code before testing.</p>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <dialog class="site-guide" id="guide-dialog" aria-labelledby="guide-title">
+    <div class="site-guide-heading">
+      <div><div class="eyebrow">SKINFORGE HELP</div><h2 id="guide-title">Your guide to making a skin</h2></div>
+      <form method="dialog"><button class="button button-quiet" autofocus>Close</button></form>
+    </div>
+    <div class="site-guide-content">
+      <p>Create a skin, inspect it on a dinosaur, then export its JSON for your server. Open a topic below for details. Closing this guide keeps your work in place.</p>
+      <details open>
+        <summary>Quick start</summary>
+        <ol>
+          <li>Start with the default skin or use <strong>Open JSON file</strong> to load an existing one.</li>
+          <li>Choose a <strong>Species</strong> in the 3D viewer and set your skin's sex and pattern index.</li>
+          <li>Edit the colour cards or press <strong>Random colours</strong>. Lock colours you want to keep while randomising.</li>
+          <li>Inspect your skin from different angles and adjust <strong>Light intensity</strong> if needed.</li>
+          <li>Name your skin, use <strong>Save current</strong> to keep a browser copy, and <strong>Download</strong> for a backup.</li>
+          <li>Use <strong>Copy</strong> or your downloaded JSON with your server's skin-import tool. SkinForge does not apply skins to the game automatically.</li>
+        </ol>
+      </details>
+      <details>
+        <summary>Importing and editing JSON</summary>
+        <ul>
+          <li><strong>Open JSON file:</strong> choose one file to edit it. Choose multiple files to add valid skins to your library and open the first valid skin.</li>
+          <li><strong>Drag and drop:</strong> drop JSON files onto the Skin JSON panel to import them.</li>
+          <li><strong>Paste a code:</strong> paste into Skin JSON, then press <strong>Load pasted JSON</strong>. Editing the text alone does not apply it to the editor.</li>
+          <li><strong>Valid / Invalid:</strong> this checks the skin data, not whether a server will accept it. An explanation below the JSON identifies invalid fields or describes the syntax error, with a line and column when available. Fix the reported problem to check for the next one. Use valid JSON with double quotes and finite numbers.</li>
+        </ul>
+        <p>Copy and Download export the active editor skin. Always load pasted edits first. Missing standard fields receive defaults; missing alpha values default to 1. Supplied alpha values are preserved.</p>
+      </details>
+      <details>
+        <summary>Skin name, sex, variation and patterns</summary>
+        <ul>
+          <li><strong>Skin name:</strong> names your download and supplies the suggested name when saving to your library. It is not a field in the exported skin JSON.</li>
+          <li><strong>Male / Female:</strong> sets the JSON sex flag. Female previews replace the male-display tint with the body tint; the viewer does not switch to a separate female model or reproduce every sex-specific feature.</li>
+          <li><strong>Skin variation:</strong> is exported, but its in-game effect is not simulated by the viewer.</li>
+          <li><strong>Pattern index:</strong> selects an adult pattern, starting at 0. If the selected species lacks that index, the viewer shows pattern 0 and a notice. Your exported index is kept.</li>
+        </ul>
+        <p>Species and skin stage are preview choices, not fields added to your skin JSON.</p>
+      </details>
+      <details>
+        <summary>Colour cards, randomising and locks</summary>
+        <p>Edit all ten layers: male display, markings, body, flank, underbelly, detail 1, eyes, teeth, mouth and claws. Which regions they affect depends on the species and pattern.</p>
+        <ul>
+          <li>Click a colour swatch to use the normal colour picker, or enter exact <strong>R, G, B and A</strong> values. Normal values run from 0 to 1. Alpha (<strong>A</strong>) is editable and exported, but its in-game effects are not simulated in the 3D preview. The colour picker changes RGB only.</li>
+          <li>Values below 0 or above 1 receive a <strong>Glitch</strong> label. Swatches and the 3D preview clamp those values for display; exported values remain outside the normal range.</li>
+          <li>Both <strong>Random colours</strong> buttons randomise RGB in unlocked layers from 0 to 1 and set their <strong>A to 1</strong>. Alpha is never randomised. Locked layers retain all four values. Sex, variation and pattern index stay unchanged.</li>
+          <li><strong>Random colour theme:</strong> choose Rock, Bush, Forest, Desert, Sand, Green, Jungle, Highlands, Plains, Swamp, Snow or Autumn to keep randomised colours within that palette. Any colours restores unrestricted randomisation. Both theme selectors stay in sync, and both Random colours buttons use the selection. All unlocked layers, including eyes, teeth and mouth, follow the theme; lock any you want to preserve. Changing the theme alone does not edit your skin. Your theme choice is remembered in this browser. These are creative palettes, not official game presets.</li>
+          <li><strong>Lock / Locked:</strong> excludes that whole colour from randomising. Click again to unlock. If all colours are locked, randomising is disabled.</li>
+          <li>Locks only affect randomising. Manual edits, Glitch Lab, imports and resets can still change locked colours.</li>
+          <li><strong>Reset layer:</strong> restores one colour to its starter value. <strong>Reset base:</strong> restores all starter skin values, including sex, variation and pattern index.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>3D viewer and lighting controls</summary>
+        <ul>
+          <li><strong>Species:</strong> selects the preview model. Unreleased species are labelled and show a notice; model-missing entries cannot be selected. Availability labels are a recorded roster snapshot.</li>
+          <li><strong>Skin stage:</strong> switches adult, juvenile or hatchling textures where available. These are shown on adult geometry; the dinosaur's growth proportions do not change.</li>
+          <li><strong>Orbit:</strong> drag with the left mouse button or one finger. <strong>Zoom:</strong> scroll or pinch. <strong>Pan:</strong> right-drag or move two fingers together.</li>
+          <li><strong>Keyboard:</strong> focus the model with Tab or click it, then use arrow keys to orbit, + / − to zoom, or Home to reset the view.</li>
+          <li><strong>Reset view:</strong> recentres the camera. <strong>Auto rotate:</strong> toggles continuous rotation.</li>
+          <li><strong>Light intensity:</strong> adjusts the lights illuminating the dinosaur from 0% to 120%. At 0% the lights are off; 100% is the softer default lighting (equivalent to the previous 30%). Your first visit after this lighting update resets the setting to the new default; later adjustments are remembered. It does not change your skin colours or JSON.</li>
+        </ul>
+        <p>The viewer is an approximation. Game lighting, materials, skin variation, growth and sex-specific features can look different. Some species lack detail masks or use a limited body-and-eye preview; read the note below the model.</p>
+      </details>
+      <details>
+        <summary>Glitch Lab</summary>
+        <ol>
+          <li>Choose the <strong>Target layer</strong> you want to change.</li>
+          <li>Choose an <strong>Effect</strong>: positive, negative, positive blowout / bleed, negative blowout / bleed, or neutral outline. Changing the effect fills in its default values.</li>
+          <li>Choose a <strong>Glitch colour</strong>. Its RGB channels receive the <strong>Active value</strong>; the remaining channels receive the <strong>Quiet value</strong>. For example, cyan activates green and blue.</li>
+          <li>Adjust those numbers if desired, then press <strong>Apply to layer</strong>. Neutral outline uses −1000 for all three channels and disables the other settings.</li>
+        </ol>
+        <p><strong>The 3D viewer cannot show game glitch effects.</strong> Export and apply the skin using your server's tools, then view it in-game. Effect names describe experimental settings, not guaranteed results; game versions and servers can behave differently.</p>
+      </details>
+      <details>
+        <summary>Saved skins, backups and exporting</summary>
+        <ul>
+          <li><strong>Save current:</strong> enter a name to add a snapshot to Saved skins. Later edits do not update that snapshot automatically; save again to keep another version.</li>
+          <li>Click a saved skin to load it. Use its <strong>×</strong> button to delete the library entry. Undo does not restore deleted library entries.</li>
+          <li>Your active skin, name, saved library, colour locks, selected species and light setting are remembered in this browser when browser storage is available.</li>
+          <li>Local saves do not sync to other devices, browsers or site addresses. Clearing site data can remove them. Download JSON copies for backups or sharing.</li>
+          <li><strong>Copy:</strong> copies the active skin JSON. <strong>Download:</strong> saves it as a JSON file using the skin name.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Undo, redo and shortcuts</summary>
+        <p>The header arrows undo or redo skin edits in the current session. History is not kept after a page reload, and does not cover names, library changes, locks or viewer controls.</p>
+        <ul>
+          <li><kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>Z</kbd>: undo.</li>
+          <li><kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>Y</kbd>, or <kbd>Shift</kbd> + <kbd>Z</kbd> with Ctrl / Cmd held: redo.</li>
+          <li><kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>S</kbd>: download the active skin JSON.</li>
+          <li><kbd>Esc</kbd>: close this guide. Tab moves between controls; Enter or Space opens guide topics.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Experimental egg generator</summary>
+        <p>Open Egg generator below the viewer. Paste or import both parents' JSON, or use the current editor skin for each parent. Choose the same species in the viewer: parent JSON does not contain a species identifier.</p>
+        <p>Adjust Parent influence to explore different inheritance chances, then generate six estimated eggs. Each colour's RGB comes intact from one parent; pattern and variation are inherited together. Sex is picked at 50/50 and alpha is set to 1. These simulation rules and the influence setting are not verified game mechanics.</p>
+        <p>Each egg shows which parent supplied each colour. Preview in editor loads that egg into the main 3D viewer and JSON editor; Undo restores the previous skin. This replaces the whole skin, including locked colours. Download JSON saves an individual egg, or save a previewed egg to your library. Parents and results are temporary and disappear on reload. Growth stages still use the adult mesh.</p>
+      </details>
+      <details>
+        <summary>Reporting an issue</summary>
+        <p>Choose Report an issue in the header, describe the problem, and optionally attach up to three images (PNG, JPEG, GIF or WebP, up to 2 MB each). You can also include the active skin JSON; the toggle is off by default. Review the skin code before sending. Pasted edits must be loaded into the editor first.</p>
+        <p>The message, viewer species, selected images and optional skin code go to the site's Discord review channel. A confirmation appears after delivery. If sending fails, your report stays in the form so you can retry. Closing the form keeps your draft until the page reloads.</p>
+      </details>
+      <details>
+        <summary>Troubleshooting</summary>
+        <ul>
+          <li><strong>Colours look different in-game:</strong> check species, sex, pattern index and skin stage first. Adjust preview lighting, and remember the viewer cannot exactly reproduce the game's materials.</li>
+          <li><strong>A pasted code has no effect:</strong> press Load pasted JSON and check for validation errors.</li>
+          <li><strong>Randomising changes nothing:</strong> unlock at least one colour.</li>
+          <li><strong>The model looks black:</strong> increase Light intensity and check whether the colour values are negative or near zero.</li>
+          <li><strong>A model or texture fails to load:</strong> use Retry if offered, check your connection, or reload. Larger textures can take longer to download.</li>
+          <li><strong>The viewer cannot start:</strong> use a browser with WebGL 2 and hardware acceleration available. If its graphics context is lost, reload the page.</li>
+        </ul>
+      </details>
+    </div>
+  </dialog>
+
+  <dialog class="site-guide" id="report-dialog" aria-labelledby="report-title">
+    <div class="site-guide-heading">
+      <div><div class="eyebrow">HELP IMPROVE SKINFORGE</div><h2 id="report-title">Send a report</h2></div>
+      <form method="dialog"><button class="button button-quiet" type="submit">Close</button></form>
+    </div>
+    <form id="report-form" class="site-guide-content report-form">
+      <p>Your message, selected images and viewer species will be sent to the site's Discord review channel. Only include information you want to share.</p>
+      <fieldset id="report-fields">
+        <label for="report-message">What happened?</label>
+        <textarea id="report-message" rows="6" maxlength="2000" required placeholder="Describe the issue and how to reproduce it."></textarea>
+        <label for="report-choose-images">Images <span class="report-optional">optional</span></label>
+        <div class="report-upload-box">
+          <div class="report-upload-controls">
+            <button id="report-choose-images" class="button button-quiet" type="button" aria-describedby="report-image-help"><span aria-hidden="true">＋</span> Choose images</button>
+            <span id="report-file-count" role="status">No images selected</span>
+          </div>
+          <p id="report-image-help">Up to 3 images · 2 MB each · PNG, JPEG, GIF or WebP</p>
+          <p class="report-upload-note">Choosing again replaces your selection.</p>
+          <input id="report-images" type="file" accept="image/png,image/jpeg,image/gif,image/webp" multiple hidden>
+        </div>
+        <div id="report-image-list" class="report-image-list"></div>
+        <button id="report-clear-images" class="text-button" type="button" hidden>Clear images</button>
+        <label class="report-skin-toggle"><input id="report-include-skin" type="checkbox"> Include the current skin's code</label>
+        <p>This uses the active editor skin at the time you send. Load any pasted JSON edits first.</p>
+        <details id="report-skin-preview" hidden><summary>Skin code to include</summary><pre id="report-skin-code"></pre></details>
+        <button id="report-submit" class="button button-primary" type="submit">Send report</button>
+      </fieldset>
+      <p id="report-status" role="status" aria-live="polite"></p>
+    </form>
+  </dialog>
+
+  <div class="toast-region" id="toast-region" aria-live="polite"></div>
+
+  <template id="colour-card-template">
+    <article class="colour-card">
+      <div class="colour-card-head">
+        <div class="swatch-wrap">
+          <span class="swatch"></span>
+          <input class="colour-picker" type="color" aria-label="Choose normal colour">
+        </div>
+        <div class="colour-title">
+          <h3></h3>
+          <code></code>
+        </div>
+        <span class="value-state">NORMAL</span>
+      </div>
+      <div class="channel-grid"></div>
+      <div class="card-foot">
+        <span class="rgb-readout"></span>
+        <div class="colour-actions">
+          <button class="colour-lock" type="button" aria-pressed="false">Lock</button>
+          <button class="reset-colour" type="button">Reset layer</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+  <script src="eggs.js"></script>
+  <script src="reports.js"></script>
+  <script type="importmap">
+    { "imports": { "three": "./vendor/three/three.module.js", "three/addons/": "./vendor/three/" } }
+  </script>
+  <script src="SkinViewer/bootstrap.js"></script>
+</body>
+</html>

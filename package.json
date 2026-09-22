@@ -1,0 +1,21 @@
+{
+  "name": "skinforge-cloudflare",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/preview.mjs --open",
+    "check": "node scripts/check.mjs",
+    "cloudflare:login": "wrangler login",
+    "cloudflare:create-bucket": "wrangler r2 bucket create skinforge-assets",
+    "cloudflare:upload": "node scripts/upload.mjs --remote",
+    "cloudflare:dev": "wrangler pages dev public",
+    "cloudflare:deploy": "npm run check && wrangler pages deploy public"
+  },
+  "devDependencies": {
+    "wrangler": "4.135.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
