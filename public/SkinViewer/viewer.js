@@ -198,8 +198,6 @@ function bodyMaterial(pattern, normal, mask, packed, maskEncoding, colourMapping
       vec3 bodyRegion = beipiPattern ? UnderbellyColor : BodyColor;
       vec3 bellyRegion = (beipiPattern || rexPattern) ? BodyColor : UnderbellyColor;
       vec3 low = mix(mix(Detail1Color, MaleDisplayColor, p.r), mix(bodyRegion, Detail1Color, p.r), p.g);
-      // Pteranodon reference: pink markings cover the broad magenta region;
-      // purple flank colour belongs to the smaller blue pattern regions.
       vec3 blueRegion = pteraPattern ? FlankColor : MarkingsColor;
       vec3 magentaRegion = pteraPattern ? MarkingsColor : FlankColor;
       vec3 high = mix(mix(blueRegion, magentaRegion, p.r), mix(bellyRegion, Detail1Color, p.r), p.g);
