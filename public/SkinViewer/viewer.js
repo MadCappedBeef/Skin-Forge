@@ -187,17 +187,22 @@ function bodyMaterial(pattern, normal, mask, packed, maskEncoding, colourMapping
   uniforms.exclusiveTmc = { value: maskEncoding === 'rgb-regions' };
   uniforms.beipiPattern = { value: false };
   uniforms.rexPattern = { value: false };
+  uniforms.pteraPattern = { value: false };
   uniforms.stegoPattern = { value: colourMapping === 'stegosaurus' };
   material.onBeforeCompile = shader => {
     Object.assign(shader.uniforms, uniforms);
     shader.fragmentShader = fields.map(f => `uniform vec3 ${f};`).join('\n') +
-      '\nuniform sampler2D tmc;\nuniform bool hasTmc;\nuniform bool exclusiveTmc;\nuniform bool stegoPattern;\nuniform bool beipiPattern;\nuniform bool rexPattern;\n' + shader.fragmentShader;
+      '\nuniform sampler2D tmc;\nuniform bool hasTmc;\nuniform bool exclusiveTmc;\nuniform bool stegoPattern;\nuniform bool beipiPattern;\nuniform bool rexPattern;\nuniform bool pteraPattern;\n' + shader.fragmentShader;
     shader.fragmentShader = shader.fragmentShader.replace('#include <map_fragment>', `
       vec3 p = texture2D(map, vMapUv).rgb;
       vec3 bodyRegion = beipiPattern ? UnderbellyColor : BodyColor;
       vec3 bellyRegion = (beipiPattern || rexPattern) ? BodyColor : UnderbellyColor;
       vec3 low = mix(mix(Detail1Color, MaleDisplayColor, p.r), mix(bodyRegion, Detail1Color, p.r), p.g);
-      vec3 high = mix(mix(MarkingsColor, FlankColor, p.r), mix(bellyRegion, Detail1Color, p.r), p.g);
+      // Pteranodon reference: pink markings cover the broad magenta region;
+      // purple flank colour belongs to the smaller blue pattern regions.
+      vec3 blueRegion = pteraPattern ? FlankColor : MarkingsColor;
+      vec3 magentaRegion = pteraPattern ? MarkingsColor : FlankColor;
+      vec3 high = mix(mix(blueRegion, magentaRegion, p.r), mix(bellyRegion, Detail1Color, p.r), p.g);
       vec3 skinColour = mix(low, high, p.b);
       if (stegoPattern) {
         float shade = max(p.r, max(p.g, p.b));
@@ -231,6 +236,7 @@ function updateSkin() {
     if (uniforms) {
       uniforms.beipiPattern.value = active.entry.id === 'beipi';
       uniforms.rexPattern.value = active.entry.id === 'tyrannosaurus';
+      uniforms.pteraPattern.value = active.entry.id === 'pter';
       for (const field of fields) uniforms[field].value.copy(colour(field, true));
       uniforms.MaleDisplayColor.value.copy(colour(skin.bIsFemale ? 'BodyColor' : 'MaleDisplayColor', true));
     } else material.color.copy(colour(material.userData.legacy ? 'BodyColor' : 'EyesColor'));
