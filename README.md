@@ -4,6 +4,8 @@ A skin JSON editor and approximate 3D dinosaur viewer for The Isle.
 Includes colour locks, camouflage palettes, an experimental offspring generator,
 JSON validation and optional Discord issue reports.
 
+https://skinforge-b4f.pages.dev
+
 ## Run locally
 
 Install Node.js 22 or later. Run **Start SkinForge.bat**, or:
