@@ -474,3 +474,5 @@ input[type="number"], select, .skin-name-input, textarea { outline: none; }
 .left-rail #server-request-button { width: 100%; margin-top: 12px; white-space: normal; }
 
 .saved-glitch-badge { margin-top: 6px; padding: 2px 6px; font-size: 9px; }
+
+.non-glitched-badge { border-color: #39796f; background: #16332e; color: #83deca; }

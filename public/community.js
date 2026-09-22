@@ -76,7 +76,7 @@
  }
  function card(item){
   const card=node('article',undefined,'panel community-card');card.append(node('h3',item.title));
-  if(item.glitched){const badge=node('span','Glitched','community-glitch-badge');badge.title='Contains colour values outside 0?1. View in-game to see glitch effects.';card.append(badge);}
+  const badge=node('span',item.glitched?'Glitched':'Non-glitched','community-glitch-badge'+(item.glitched?'':' non-glitched-badge'));badge.title=item.glitched?'Contains colour values outside 0-1. View in-game to see glitch effects.':'All colour values are within 0-1.';card.append(badge);
   card.append(node('p',(catalog.find(entry=>entry.id===item.species)?.name||item.species)+' · '+new Date(item.createdAt*1000).toLocaleDateString()));
   card.append(steamIdentity(item.steamId));
   if(item.hidden||item.accountHidden)card.append(node('p','Hidden'+(item.accountHidden?' by account moderation':'')+(item.reason?': '+item.reason:'')));

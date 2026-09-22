@@ -422,7 +422,7 @@ function renderSavedPresets() {
     row.role = "button";
     row.innerHTML = `
       <span class="saved-glyph">S</span>
-      <span><strong>${escapeHTML(item.name)}</strong><small>${escapeHTML(item.date || "Local preset")}</small>${glitched ? '<span class="community-glitch-badge saved-glitch-badge" title="Contains colour values outside 0?1. View in-game to see glitch effects.">Glitched</span>' : ""}</span>
+      <span><strong>${escapeHTML(item.name)}</strong><small>${escapeHTML(item.date || "Local preset")}</small>${glitched ? '<span class="community-glitch-badge saved-glitch-badge" title="Contains colour values outside 0-1. View in-game to see glitch effects.">Glitched</span>' : '<span class="community-glitch-badge saved-glitch-badge non-glitched-badge" title="All colour values are within 0-1.">Non-glitched</span>'}</span>
       <button class="delete-saved" type="button" data-delete="${escapeHTML(item.id)}" aria-label="Delete ${escapeHTML(item.name)}">×</button>`;
     elements.savedList.append(row);
   }
