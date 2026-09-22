@@ -16,35 +16,11 @@ npm start
 Open http://localhost:8001. Models and textures are included in `r2/`.
 The local server serves those files directly; Cloudflare is not needed for previews.
 
-## Publish to GitHub
-
-1. Run **Prepare GitHub.bat** in your working folder. It creates or refreshes
-   **GitHubSource**, including the original R2 assets. It excludes dependencies,
-   private environment files and Cloudflare cache/state.
-2. In GitHub Desktop, choose **File ? Add local repository** and select
-   **GitHubSource**. If Git is installed, the preparation script has already
-   initialised this repository. Otherwise use **create a repository here**.
-3. Review the changes, commit them, then choose **Publish repository**.
-4. Uncheck **Keep this code private** to make the repository public.
-
-For updates, run **Prepare GitHub.bat** again, review and commit the changes in
-GitHub Desktop, then **Push origin**. The script copies managed files and
-preserves the exported repository's Git history. It does not commit or publish.
-Make changes in the working folder rather than the generated copy. Deleted or
-renamed source files must also be removed from the exported copy manually.
-
-Use GitHub Desktop or Git rather than browser uploads: some assets exceed the
-browser's 25 MiB limit. All current files are below GitHub's 100 MiB Git limit,
-so Git LFS is not required for this snapshot. The exporter checks that limit.
-The initial upload includes approximately 685 MiB of game assets.
-
-[GitHub Desktop publishing instructions](https://docs.github.com/en/desktop/adding-and-cloning-repositories/adding-an-existing-project-to-github-using-github-desktop)
-
 ## Development and checks
 
 - `public/`: website, viewer, report endpoint and bundled Three.js.
 - `r2/`: original models and textures; do not modify their bytes without updating the manifest and catalog URLs.
-- `scripts/`: local server, asset validation/upload, report tests and source export.
+- `scripts/`: local server and asset validation/upload.
 - `asset-manifest.json`: asset paths and SHA-256 hashes.
 
 ```sh
